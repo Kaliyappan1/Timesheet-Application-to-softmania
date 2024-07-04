@@ -1,0 +1,25 @@
+.admin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 150px;
+}
+.admin-headline{
+    font-size: 45px;
+    font-weight: 600;
+
+}
+.admin-subline{
+    margin: 10px;
+    font-size:9.5px;
+    color: green;
+    font-weight: 600;
+}
+.admin-custamized-space{
+    display: flex;
+    align-items: center;
+    margin-left: -120px ;
+}
+.admin-remember{
+    font-size: 12px;
+}

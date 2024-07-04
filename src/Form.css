@@ -1,0 +1,32 @@
+.formComponent{
+    display: flex;
+    justify-content: center;
+}
+
+.total-hours{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.timesheet-weeklist{
+    color: rgb(182, 182, 182);
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 788px) {
+    .formComponent{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .card-Container-1{
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .card-Container-2{
+        display: flex;
+        justify-content: space-evenly;
+    }
+    
+}

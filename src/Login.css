@@ -1,0 +1,49 @@
+.login{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    
+}
+
+.login-headline{
+    font-size: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+.login-subline{
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.signup-navigate-link{
+    text-decoration: none;
+    color: blue;
+
+}
+:link{
+    text-decoration: none;
+    color: black;
+}
+.login-forgetPassword{
+    color: blue;
+    font-size: 12px;
+    font-weight: 350;
+}
+.login-custamized-space{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.login-remember{
+  font-size: 15px;
+  margin-left: -20px;
+  font-weight: 400;
+}
+.login-button-center{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
