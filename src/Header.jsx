@@ -34,9 +34,9 @@ function Header() {
             <Link to="/login">
             <Button sx={{color: "white", fontWeight:600, pr: 2}} component="div" color='inherit'>Login</Button>
             </Link>
-            <Link to="/settings">
+            {/* <Link to="/settings">
             <Button sx={{fontWeight:600, color: "white" }} component="div" color='inherit'>Settings</Button>
-            </Link>
+            </Link> */}
           </Toolbar>
         </AppBar>
       </Box>

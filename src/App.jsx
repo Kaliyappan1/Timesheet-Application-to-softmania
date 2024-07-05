@@ -7,6 +7,7 @@ import Login from './Login'
 import Signup from './Signup'
 import Admin from './Admin'
 import Form from './Form'
+import AdminDashboard from './AdminDashboard'
 
 
 function App() {
@@ -42,6 +43,12 @@ function App() {
       <>
       <Header/>
       <Form/>
+      </>
+    } />
+    <Route path='/admin-dashboard' element={
+      <>
+      <Header/>
+      <AdminDashboard/>
       </>
     } />
 

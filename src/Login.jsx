@@ -11,11 +11,9 @@ function Login() {
     <div className="login">
       <Card sx={{ p: 5, maxWidth: 500, maxHeight: 600 }}>
         <h2 className="login-headline">Signin to your account</h2>
-        <div>
-          <Link to="/signup">
-        <h6 className="login-subline">Or <span className="signup-navigate-link">sign up for a new account</span></h6>
-          </Link>
-        </div>
+        
+         
+       
         <Box
           component="form"
           sx={{
@@ -48,6 +46,10 @@ function Login() {
           </Link>
         </div>
         <div className="login-button-center">
+
+        <Link to="/signup">
+        <h6 className="login-subline">Or <span className="signup-navigate-link">sign up for a new account</span></h6>
+          </Link>
 
         <Button
           sx={{backgroundColor: (theme) => theme.palette.success.light, pl: 8, pr: 8, pb: 1, pt: 1, mt: 3,mb:2 }}
