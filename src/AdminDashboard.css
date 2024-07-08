@@ -1,3 +1,12 @@
 .adminDashboard{
     display: flex;
+   
+}
+.admin-content{
+    display: flex;
+}
+.employe-count{
+    display: flex;
+    margin: 15px 1px 5px;
+
 }
