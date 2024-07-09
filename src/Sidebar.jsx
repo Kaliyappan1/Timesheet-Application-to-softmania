@@ -4,16 +4,14 @@ import {
   Sidebar,
   Menu,
   MenuItem,
-  SubMenu,
   sidebarClasses,
 } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import GroupsIcon from "@mui/icons-material/Groups";
-import LogoutIcon from "@mui/icons-material/Logout";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 function AdminSidebar() {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -34,28 +32,28 @@ function AdminSidebar() {
         >
           <Menu>
             <MenuItem
-              component={<Link to="adminDashboard" />}
+              component={<Link to="/admin-dashboard" />}
               icon={<DashboardIcon sx={{ fontSize: 28 }} />}
             >
               Dashboard
             </MenuItem>
             <MenuItem
-              component={<Link to="adminTimesheets" />}
+              component={<Link to="/adminTimesheets" />}
               icon={<AccessTimeIcon sx={{ fontSize: 28 }} />}
             >
               {" "}
               Timesheet
             </MenuItem>
             <MenuItem
-              component={<Link to="adminTeams" />}
+              component={<Link to="/adminTeams" />}
               icon={<GroupsIcon sx={{ fontSize: 28 }} />}
             >
               {" "}
               Teams
             </MenuItem>
             <MenuItem
-              component={<Link to="logout" />}
-              icon={<LogoutIcon sx={{ fontSize: 28 }} />}
+              component={<Link to="/logout" />}
+              icon={<PowerSettingsNewIcon sx={{ fontSize: 28 }} />}
             >
               {" "}
               Logout

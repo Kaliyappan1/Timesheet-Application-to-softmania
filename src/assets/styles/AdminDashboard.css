@@ -1,12 +1,20 @@
 .adminDashboard{
     display: flex;
+    flex-direction: column;
+
    
 }
 .admin-content{
     display: flex;
+
 }
 .employe-count{
     display: flex;
     margin: 15px 1px 5px;
 
+}
+.admin-Header{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 35px 3px 20px;
 }

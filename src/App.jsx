@@ -8,6 +8,7 @@ import Signup from './Signup'
 import Admin from './Admin'
 import Form from './Form'
 import AdminDashboard from './AdminDashboard'
+import AdminSidebar from './Sidebar'
 
 
 function App() {

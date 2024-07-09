@@ -1,27 +1,71 @@
 import React from 'react'
 import './assets/styles/AdminDashboard.css'
 import Sidebar from './Sidebar'
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import { Avatar, Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material'
 import PeopleIcon from '@mui/icons-material/People';
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import UpdateIcon from '@mui/icons-material/Update';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+
+
+// string to avatar start
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: `${name.split(' ')[0][0]}`,
+  };
+}
+// string to avatar end
+
+
 
 function AdminDashboard() {
   return (
     <div className='adminDashboard'>
-        <div className="sidbar">
-            <Sidebar/>
-        </div>
-        <div className="admin-content">
-            <div className="employee-container">
+        
+          <div className="admin-Header">
+              <div>
+              <Typography sx={{fontSize: 25, fontWeight: 700,ml:2}}>Admin Dashboard</Typography>
+              </div>
+             <div>
+             <Stack>
+              <Avatar {...stringAvatar('Kaliyappan')} />
+             </Stack>
+             </div>
+          </div>
+        
+
+           <div className="admin-content">
+           <div className="employee-container">
             <Card sx={{ minWidth: 250,minHeight:200, m: 3}}>
               <CardContent sx={{alignItems: "center", pl: 3}}>
                   <Typography variant='h6'>
                     Employees
                   </Typography>
                   <div className="employe-count">
-                      <PeopleIcon sx={{fontSize: 40}}/>
-                      <Typography sx={{ml: 5, fontSize: 30}}>8</Typography>
+                      <PeopleIcon sx={{fontSize: 35}}/>
+                      <Typography sx={{ml: 2, fontSize: 26}}>8</Typography>
                   </div>
                   <Typography sx={{ fontSize: 12}}>
                     Active empolyees
@@ -41,11 +85,11 @@ function AdminDashboard() {
                     Daily - Timesheets
                   </Typography>
                   <div className="employe-count">
-                      <PendingActionsIcon sx={{fontSize: 35}}/>
-                      <Typography sx={{ml: 2,mr:3, fontSize: 28}}>8</Typography>
+                      <UpdateIcon sx={{fontSize: 32}}/>
+                      <Typography sx={{ml: 2,mr:3, fontSize: 25}}>8</Typography>
                     
-                      <UpdateIcon sx={{ml: 2, fontSize: 35}}/>
-                      <Typography sx={{ml: 2, fontSize: 28}}>2</Typography>
+                      <TaskAltIcon sx={{ml: 2, fontSize: 30}}/>
+                      <Typography sx={{ml: 2, fontSize: 25}}>2</Typography>
                   
                   </div>
                   <div className='employe-count'>
@@ -60,14 +104,15 @@ function AdminDashboard() {
               </CardContent>
               <CardActions sx={{ marginLeft: 1,mt: 0}}>
                 <Button size='small' color='success'>
-                  Manage Employees
+                  View Timesheets
                 </Button>
                  
               </CardActions>
             </Card>
             </div>
+           </div>
             
-        </div>
+        
     </div>
   )
 }
