@@ -18,7 +18,7 @@ function Home() {
             xl: 80,
           
           },
-          fontWeight: 550
+          fontWeight: 900
         }}
         variant="h2"
       >
@@ -35,7 +35,7 @@ function Home() {
             lg: 18,
             xl: 19,
           },
-          fontWeight: 400
+          fontWeight: 500
         }}
         variant="subtitle2"
       >

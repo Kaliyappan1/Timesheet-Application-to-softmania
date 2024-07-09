@@ -1,13 +1,15 @@
 import React from 'react'
 import "./assets/styles/Admin.css"
 import { Link } from 'react-router-dom'
-import { Box, Button, Checkbox, TextField } from '@mui/material'
+import { Box, Button, Card, Checkbox, TextField } from '@mui/material'
 
 function Admin() {
   return (
     <div className='admin'>
-       
-        <h2 className="admin-headline">Admin SignIn</h2>
+
+    <Card sx={{p: 5}}>
+    <div className="admin-login-container">
+       <h2 className="admin-headline">Admin SignIn</h2>
         <h6 className="admin-subline ">manage your business Powerful admin tools</h6>
         <Box
           component="form"
@@ -38,13 +40,14 @@ function Admin() {
           <p className="admin-remember">Remember me</p>
           
         </div>
-        <Button
-          sx={{ pl: 11, pr: 11, pb: 1, pt: 1, mt: 3,mb:2 }}
-          variant="contained"
-          color="success"
-        >
-          Login
-        </Button>
+        <div className="admin-button">
+        
+        <button class="button-33" role="button">Go Dashboard</button>
+
+        </div>
+       
+       </div>
+    </Card>
         
     </div>
   )
