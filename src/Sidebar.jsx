@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sidebar.css";
+import "./assets/styles/Sidebar.css";
 import {
   Sidebar,
   Menu,

@@ -1,5 +1,5 @@
 import React from 'react'
-import "./Admin.css"
+import "./assets/styles/Admin.css"
 import { Link } from 'react-router-dom'
 import { Box, Button, Checkbox, TextField } from '@mui/material'
 

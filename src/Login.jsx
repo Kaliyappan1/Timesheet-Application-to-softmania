@@ -1,5 +1,5 @@
 import React from "react";
-import "./Login.css";
+import "./assets/styles/Login.css";
 import { Box, Button, Card, Checkbox, TextField } from "@mui/material";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";

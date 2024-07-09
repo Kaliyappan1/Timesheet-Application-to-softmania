@@ -1,5 +1,5 @@
 import React from 'react'
-import './AdminDashboard.css'
+import './assets/styles/AdminDashboard.css'
 import Sidebar from './Sidebar'
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import PeopleIcon from '@mui/icons-material/People';

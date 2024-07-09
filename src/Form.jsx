@@ -1,5 +1,5 @@
 import React from "react";
-import "./Form.css";
+import "./assets/styles/Form.css";
 import {
   Box,
   Button,
