@@ -38,14 +38,14 @@ function AdminSidebar() {
               Dashboard
             </MenuItem>
             <MenuItem
-              component={<Link to="/adminTimesheets" />}
+              component={<Link to="/admin-Timesheets" />}
               icon={<AccessTimeIcon sx={{ fontSize: 28 }} />}
             >
               {" "}
               Timesheet
             </MenuItem>
             <MenuItem
-              component={<Link to="/adminTeams" />}
+              component={<Link to="/admin-Teams" />}
               icon={<GroupsIcon sx={{ fontSize: 28 }} />}
             >
               {" "}

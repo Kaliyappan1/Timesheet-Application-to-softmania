@@ -7,6 +7,7 @@ import Signup from "../Signup";
 import Admin from "../Admin";
 import Form from "../Form";
 import AdminDashboard from "../AdminDashboard";
+import AdminTimesheets from "../AdminTimesheets";
 
 function Routing() {
   return (
@@ -61,8 +62,17 @@ function Routing() {
           path="/admin-dashboard"
           element={
             <>
-              <Header />
+              
               <AdminDashboard />
+            </>
+          }
+        />
+        <Route
+          path="/admin-timesheets"
+          element={
+            <>
+              
+              <AdminTimesheets />
             </>
           }
         />
