@@ -8,6 +8,7 @@ import Admin from "../Admin";
 import Form from "../Form";
 import AdminDashboard from "../AdminDashboard";
 import AdminTimesheets from "../AdminTimesheets";
+import AdminSidebar from "../Sidebar";
 
 function Routing() {
   return (
@@ -62,7 +63,7 @@ function Routing() {
           path="/admin-dashboard"
           element={
             <>
-              
+              <AdminSidebar/>
               <AdminDashboard />
             </>
           }

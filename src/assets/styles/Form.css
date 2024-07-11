@@ -9,7 +9,7 @@
     justify-content: space-between;
 }
 .timesheet-weeklist{
-    color: rgb(182, 182, 182);
+    color: rgb(125, 125, 125);
     display: flex;
     justify-content: space-evenly;
 }

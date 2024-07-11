@@ -1,13 +1,16 @@
 import React from "react";
 import "./assets/styles/Login.css";
-import { Box, Button, Card, Checkbox, TextField } from "@mui/material";
+import { Box, Button, Card, Checkbox, TextField, ThemeProvider } from "@mui/material";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
+import theme from "./components/Theme";
 
 function Login() {
   return (
     <div className="login">
+      <ThemeProvider theme={theme}>
+
       <Card sx={{ p: 5, maxWidth: 400, maxHeight: 600 }}>
         <h2 className="login-headline">SignUp</h2>
 
@@ -25,7 +28,7 @@ function Login() {
         >
           <div>
             <TextField
-              color="success"
+              
               size="small"
               id="outlined-basic"
               label="Name"
@@ -34,7 +37,7 @@ function Login() {
           </div>
           <div>
             <TextField
-              color="success"
+              
               size="small"
               id="outlined-basic"
               label="Email"
@@ -44,7 +47,7 @@ function Login() {
 
           <div>
             <TextField
-              color="success"
+              
               size="small"
               id="outlined-basic"
               label="Password"
@@ -53,7 +56,7 @@ function Login() {
           </div>
           <div>
             <TextField
-              color="success"
+              
               size="small"
               id="outlined-basic"
               label="re-password"
@@ -62,7 +65,7 @@ function Login() {
           </div>
         </Box>
         <div className="login-custamized-space">
-          <Checkbox color="success" />
+          <Checkbox  />
           <p className="login-remember">Remember me</p>
           <Link to="forget-password">
             <p className="login-forgetPassword">forget password</p>
@@ -81,7 +84,6 @@ function Login() {
           </div>
           <Button
             sx={{
-              backgroundColor: (theme) => theme.palette.success.light,
               pl: 8,
               pr: 8,
               pb: 1,
@@ -91,7 +93,7 @@ function Login() {
             }}
             variant="contained"
             size="contained"
-            color="success"
+            
           >
             SignIn
           </Button>
@@ -106,6 +108,7 @@ function Login() {
           />
         </div>
       </Card>
+      </ThemeProvider>
     </div>
   );
 }

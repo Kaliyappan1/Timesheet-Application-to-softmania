@@ -1,36 +1,91 @@
 import React from "react";
 import "./assets/styles/AdminTimesheets.css";
-import { Avatar, Paper, Stack, Typography } from "@mui/material";
-
+import { Avatar, Paper, Stack, ThemeProvider, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import theme from "./components/Theme";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "Name", headerName: "Name", width: 160 },
-  { 
-      field: 'age', 
-      headerName: 'Date', 
-      width: 150,
-    },
-    { field: "attendence", headerName: "Attendence", width: 130 },
- 
-    { field: "workHours",type: "number", headerName: "Work Hours", width: 100 },
-    { field: "topics", headerName: "Topics", width: 250 },
-    { field: "description", headerName: "Description", width: 500},
-
- 
+  {
+    field: "age",
+    headerName: "Date",
+    width: 150,
+  },
+  { field: "attendence", headerName: "Attendence", width: 130 },
+  { field: "workHours", type: "number", headerName: "Work Hours", width: 100 },
+  { field: "topics", headerName: "Topics", width: 250 },
+  { field: "description", headerName: "Description", width: 500 },
 ];
 
 const rows = [
-  { id: 1, lastName: "Snow", Name: "Jon", age: "10/07/2004", attendence: "present" ,workHours: 12, topics: "timesheet application web development", description: "timesheet application worked and javascript basics coved today" },
-  { id: 2, lastName: "Lannister", Name: "Cersei", age: "10/07/2004", attendence: "present" },
-  { id: 3, lastName: "Lannister", Name: "Jaime", age: "10/07/2004", attendence: "present" },
-  { id: 4, lastName: "Stark", Name: "Arya", age: "10/07/2004", attendence: "present" },
-  { id: 5, lastName: "Targaryen", Name: "Daenerys", age: "10/07/2004", attendence: "present" },
-  { id: 6, lastName: "Melisandre", Name: "kaliyappan", age: "10/07/2004", attendence: "present" },
-  { id: 7, lastName: "Clifford", Name: "Ferrara", age: "10/07/2004", attendence: "present" },
-  { id: 8, lastName: "Frances", Name: "Rossini", age: "10/07/2004", attendence: "present" },
-  { id: 9, lastName: "Roxie", Name: "Harvey", age: "10/07/2004", attendence: "present" },
+  {
+    id: 1,
+    lastName: "Snow",
+    Name: "Jon",
+    age: "10/07/2004",
+    attendence: "present",
+    workHours: 12,
+    topics: "timesheet application web development",
+    description:
+      "timesheet application worked and javascript basics coved today",
+  },
+  {
+    id: 2,
+    lastName: "Lannister",
+    Name: "Cersei",
+    age: "10/07/2004",
+    attendence: "present",
+  },
+  {
+    id: 3,
+    lastName: "Lannister",
+    Name: "Jaime",
+    age: "10/07/2004",
+    attendence: "present",
+  },
+  {
+    id: 4,
+    lastName: "Stark",
+    Name: "Arya",
+    age: "10/07/2004",
+    attendence: "present",
+  },
+  {
+    id: 5,
+    lastName: "Targaryen",
+    Name: "Daenerys",
+    age: "10/07/2004",
+    attendence: "present",
+  },
+  {
+    id: 6,
+    lastName: "Melisandre",
+    Name: "kaliyappan",
+    age: "10/07/2004",
+    attendence: "present",
+  },
+  {
+    id: 7,
+    lastName: "Clifford",
+    Name: "Ferrara",
+    age: "10/07/2004",
+    attendence: "present",
+  },
+  {
+    id: 8,
+    lastName: "Frances",
+    Name: "Rossini",
+    age: "10/07/2004",
+    attendence: "present",
+  },
+  {
+    id: 9,
+    lastName: "Roxie",
+    Name: "Harvey",
+    age: "10/07/2004",
+    attendence: "present",
+  },
 ];
 
 function AdminTimesheets() {
@@ -65,7 +120,10 @@ function AdminTimesheets() {
   // string to avatar end
 
   return (
+    
     <div className="admin-Timesheets">
+      <ThemeProvider theme={theme}>
+
       <div className="admin-Header">
         <div>
           <Typography sx={{ fontSize: 25, fontWeight: 700, ml: 2 }}>
@@ -101,8 +159,16 @@ function AdminTimesheets() {
       </div> */}
       <div className="admin-timesheet-table">
         <Paper>
-          <div style={{ height: 400, width: "100%" }}>
+          <div style={{ height: 400, width: "100%"}}>
             <DataGrid
+            
+              sx={{
+                boxShadow: 2,
+                "& .MuiDataGrid-cell:hover": {
+                  borderColor: "success.light",
+                  border: 1,
+                },
+              }}
               rows={rows}
               columns={columns}
               initialState={{
@@ -116,6 +182,7 @@ function AdminTimesheets() {
           </div>
         </Paper>
       </div>
+      </ThemeProvider>
     </div>
   );
 }
