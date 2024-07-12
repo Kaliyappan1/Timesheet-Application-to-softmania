@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./assets/styles/Sidebar.css";
 import {
   Sidebar,
@@ -14,10 +14,14 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 function AdminSidebar() {
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  
   return (
     <div className="sidebar">
       <div className="sidebar-content">
+      <button  onClick={() => setCollapsed(!collapsed)} >
+          <ArrowBackIosNewIcon/>
+        </button>
         <Sidebar
           width="200px"
           collapsed={collapsed}
@@ -41,33 +45,27 @@ function AdminSidebar() {
               component={<Link to="/admin-Timesheets" />}
               icon={<AccessTimeIcon sx={{ fontSize: 28 }} />}
             >
-              {" "}
+              
               Timesheet
             </MenuItem>
             <MenuItem
               component={<Link to="/admin-Teams" />}
               icon={<GroupsIcon sx={{ fontSize: 28 }} />}
             >
-              {" "}
+              
               Teams
             </MenuItem>
             <MenuItem
               component={<Link to="/logout" />}
               icon={<PowerSettingsNewIcon sx={{ fontSize: 28 }} />}
             >
-              {" "}
+              
               Logout
             </MenuItem>
           </Menu>
         </Sidebar>
       </div>
-      <main style={{ padding: 5 }}>
-        <button className="sb-button" onClick={() => setCollapsed(!collapsed)} >
-          <ArrowBackIosNewIcon/>
-        </button>
-        
-
-      </main>
+      
     </div>
   );
 }

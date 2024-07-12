@@ -1,16 +1,33 @@
-.admin-search{
+.adminTeam-row{
     display: flex;
-    justify-content: center;
+    margin: 20px 9rem;
+    justify-content: space-between;
+    align-items: center;
+    
 }
+
 .admin-timesheet-table{
     margin: 3pc 50px;
 }
 .adminTeamTable{
-    margin: 3pc 250px;
+    margin: 3pc 9rem;
 }
 .adminTeamPagination{
     display: flex;
     flex-direction: row;
     justify-content: center;
     position: static;
+}
+@media only screen and ( max-width: 868px) {
+    .adminTeamTable{
+        margin: 3pc 20px;
+    }
+    .adminTeam-row{
+        display: flex;
+        margin: 20px;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+    
 }
