@@ -159,7 +159,7 @@ function AdminTimesheets() {
       </div> */}
       <div className="admin-timesheet-table">
         <Paper>
-          <div style={{ height: 400, width: "100%"}}>
+          <div style={{ height: 600, width: "100%"}}>
             <DataGrid
             
               sx={{
@@ -173,10 +173,10 @@ function AdminTimesheets() {
               columns={columns}
               initialState={{
                 pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
+                  paginationModel: { page: 0, pageSize: 10 },
                 },
               }}
-              pageSizeOptions={[5, 10, 20, 40]}
+              pageSizeOptions={[10, 20, 40]}
               checkboxSelection
             />
           </div>

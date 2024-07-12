@@ -9,6 +9,7 @@ import Form from "../Form";
 import AdminDashboard from "../AdminDashboard";
 import AdminTimesheets from "../AdminTimesheets";
 import AdminSidebar from "../Sidebar";
+import AdminTeams from "../AdminTeams";
 
 function Routing() {
   return (
@@ -74,6 +75,15 @@ function Routing() {
             <>
               
               <AdminTimesheets />
+            </>
+          }
+        />
+        <Route
+          path="/admin-teams"
+          element={
+            <>
+              
+              <AdminTeams />
             </>
           }
         />

@@ -3,5 +3,14 @@
     justify-content: center;
 }
 .admin-timesheet-table{
-    margin: 5pc 50px;
+    margin: 3pc 50px;
+}
+.adminTeamTable{
+    margin: 3pc 250px;
+}
+.adminTeamPagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: static;
 }
