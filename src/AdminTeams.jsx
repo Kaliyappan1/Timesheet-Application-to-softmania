@@ -24,11 +24,11 @@ function createData(name, role, contact) {
 }
 
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Eclair", 262, 16.0),
-  createData("Cupcake", 305, 3.7),
-  createData("Gingerbread", 356, 16.0),
+  createData("Muruganantham", "admin", "murugan@gmail.com"),
+  createData("Ramany", "trainer", "ramany@gmail.com"),
+  createData("kaliyappan", "web developer", "kaliyappan@gmail.com"),
+  createData("varsha","python developer", "varsha@gmail.com"),
+  createData("------------", "-------------", "---------"),
 ];
 
 function AdminTeams() {
@@ -102,8 +102,8 @@ function AdminTeams() {
               <TableHead>
                 <TableRow >
                   <TableCell sx={{pr: 5, pl:5}}>Name</TableCell>
-                  <TableCell sx={{pr: 5, pl:5}} align="right">Role</TableCell>
-                  <TableCell sx={{pr: 5, pl:5}} align="right">Contact</TableCell>
+                  <TableCell sx={{pr: 5, pl:5}} >Role</TableCell>
+                  <TableCell sx={{pr: 5, pl:5}}>Contact</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -115,8 +115,8 @@ function AdminTeams() {
                     <TableCell component="th" scope="row" sx={{pr: 5, pl:5}}>
                       {row.name}
                     </TableCell>
-                    <TableCell sx={{pr: 5, pl:5}} align="right">{row.role}</TableCell>
-                    <TableCell sx={{pr: 5, pl:5}} align="right">{row.contact}</TableCell>
+                    <TableCell sx={{pr: 5, pl:5}}>{row.role}</TableCell>
+                    <TableCell sx={{pr: 5, pl:5}}>{row.contact}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
