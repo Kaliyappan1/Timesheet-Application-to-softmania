@@ -1,12 +1,9 @@
 .adminDashboard{
     display: flex;
-    flex-direction: column;
-
-   
+    flex: 0.8;
 }
 .admin-content{
     display: flex;
-
 }
 .employe-count{
     display: flex;

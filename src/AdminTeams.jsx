@@ -19,6 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import AdminSidebar from "./Sidebar";
 
 function createData(name, role, contact) {
   return { name, role, contact };
@@ -65,6 +66,10 @@ function AdminTeams() {
 
   return (
     <div className="adminTeams">
+      <div className="adminTeamsSidebar">
+        <AdminSidebar/>
+      </div>
+      <div className="adminTeamsContent">
       <ThemeProvider theme={theme}>
         <div className="admin-Header">
           {/* admin header line */}
@@ -148,6 +153,7 @@ function AdminTeams() {
           </Stack>
         </div>
       </ThemeProvider>
+      </div>
     </div>
   );
 }

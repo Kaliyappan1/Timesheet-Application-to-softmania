@@ -64,7 +64,7 @@ function Routing() {
           path="/admin-dashboard"
           element={
             <>
-              <AdminSidebar/>
+
               <AdminDashboard />
             </>
           }
@@ -73,7 +73,7 @@ function Routing() {
           path="/admin-timesheets"
           element={
             <>
-              
+
               <AdminTimesheets />
             </>
           }
@@ -82,7 +82,6 @@ function Routing() {
           path="/admin-teams"
           element={
             <>
-              
               <AdminTeams />
             </>
           }

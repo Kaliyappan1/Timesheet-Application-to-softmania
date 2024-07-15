@@ -1,10 +1,11 @@
 import React from 'react'
 import './assets/styles/AdminDashboard.css'
-import Sidebar from './Sidebar'
 import { Avatar, Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material'
 import PeopleIcon from '@mui/icons-material/People';
 import UpdateIcon from '@mui/icons-material/Update';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import AdminSidebar from './Sidebar';
+import { Link } from 'react-router-dom';
 
 
 // string to avatar start
@@ -42,8 +43,13 @@ function stringAvatar(name) {
 
 function AdminDashboard() {
   return (
+    
     <div className='adminDashboard'>
         
+          <div className="admin-dashboard-sidebar">
+              <AdminSidebar/>
+          </div>
+          <div className="admin-dashboard-content">
           <div className="admin-Header">
               <div>
               <Typography sx={{fontSize: 25, fontWeight: 700,ml:2}}>Admin Dashboard</Typography>
@@ -72,9 +78,11 @@ function AdminDashboard() {
                   </Typography>
               </CardContent>
               <CardActions sx={{ ml: 1, mt: 2}}>
+                <Link to="/admin-teams">
                 <Button size='small' color='success'>
                   Manage Employees
                 </Button>
+                </Link>
               </CardActions>
             </Card>
             </div>
@@ -103,16 +111,20 @@ function AdminDashboard() {
                   </div>
               </CardContent>
               <CardActions sx={{ marginLeft: 1,mt: 0}}>
+                <Link to="/admin-timesheets">
                 <Button size='small' color='success'>
                   View Timesheets
                 </Button>
+                </Link>
                  
               </CardActions>
             </Card>
             </div>
            </div>
             
+          </div>
         
+
     </div>
   )
 }

@@ -1,72 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import "./assets/styles/Sidebar.css";
-import {
-  Sidebar,
-  Menu,
-  MenuItem,
-  sidebarClasses,
-} from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
+import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import GroupsIcon from "@mui/icons-material/Groups";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import LogoutIcon from "@mui/icons-material/Logout";
+import { Link } from "react-router-dom";
+import AdminDashboard from "./AdminDashboard";
 
 function AdminSidebar() {
-  const [collapsed, setCollapsed] = useState(false);
-  
+  const [collapsed, setCollapsed] = React.useState(false);
   return (
+
     <div className="sidebar">
-      <div className="sidebar-content">
-      <button  onClick={() => setCollapsed(!collapsed)} >
-          <ArrowBackIosNewIcon/>
-        </button>
-        <Sidebar
-          width="200px"
-          collapsed={collapsed}
-          rootStyles={{
-            [`.${sidebarClasses.container}`]: {
-              backgroundColor: "#2E7D32",
-              color: "#fff",
-              fontWeight: 900,
-              fontSize: 20,
-            },
-          }}
-        >
-          <Menu>
-            <MenuItem
-              component={<Link to="/admin-dashboard" />}
-              icon={<DashboardIcon sx={{ fontSize: 28 }} />}
-            >
-              Dashboard
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/admin-Timesheets" />}
-              icon={<AccessTimeIcon sx={{ fontSize: 28 }} />}
-            >
-              
-              Timesheet
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/admin-Teams" />}
-              icon={<GroupsIcon sx={{ fontSize: 28 }} />}
-            >
-              
-              Teams
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/logout" />}
-              icon={<PowerSettingsNewIcon sx={{ fontSize: 28 }} />}
-            >
-              
-              Logout
-            </MenuItem>
-          </Menu>
-        </Sidebar>
-      </div>
-      
+    <div style={{ display: "flex", height: "100vh", color: "black" }}>
+      <Sidebar
+        className="app"
+        width="210px"
+        style={{ backgroundColor: "darkgreen", border: "none"}}
+        collapsed={collapsed}
+      >
+        <Menu style={{ display: "flex", alignContent: "center" }}>
+          <MenuItem
+            className="menu1"
+            icon={<MenuIcon onClick={() => setCollapsed(!collapsed)} />}
+          >
+            <h2>Softmania</h2>
+          </MenuItem>
+          <MenuItem
+            component={<Link to="/admin-Dashboard" />}
+            icon={<DashboardIcon />}
+          >
+            Dashboard
+          </MenuItem>
+          <MenuItem
+            component={<Link to="/admin-timesheets" />}
+            icon={<AccessTimeFilledIcon />}
+          >
+            Timesheets
+          </MenuItem>
+          <MenuItem
+            component={<Link to="/admin-teams" />}
+            icon={<GroupsIcon />}
+          >
+            Teams
+          </MenuItem>
+          <MenuItem component={<Link to="/" />} icon={<LogoutIcon />}>
+            Logout
+          </MenuItem>
+        </Menu>
+      </Sidebar>
     </div>
+
+    </div>
+   
   );
 }
 
