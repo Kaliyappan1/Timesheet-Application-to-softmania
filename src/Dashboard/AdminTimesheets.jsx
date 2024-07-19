@@ -1,8 +1,8 @@
 import React from "react";
-import "./assets/styles/AdminTimesheets.css";
+import "../assets/styles/AdminTimesheets.css";
 import { Avatar, Paper, Stack, ThemeProvider, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import theme from "./components/Theme";
+import theme from "../components/Theme";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },

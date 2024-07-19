@@ -1,7 +1,7 @@
 import React from "react";
-import "./assets/styles/AdminTimesheets.css";
+import "../assets/styles/AdminTimesheets.css";
 import { ThemeProvider } from "@emotion/react";
-import theme from "./components/Theme";
+import theme from "../components/Theme";
 import {
   Avatar,
   Button,

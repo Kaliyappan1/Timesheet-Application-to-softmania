@@ -2,14 +2,14 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../Header";
 import Home from "../Home";
-import Login from "../Login";
-import Signup from "../Signup";
-import Admin from "../Admin";
+import Login from "../Login/Login";
+import Signup from "../Login/Signup";
+import Admin from "../Login/Admin";
 import Form from "../Form";
-import AdminDashboard from "../AdminDashboard";
-import AdminTimesheets from "../AdminTimesheets";
-import AdminSidebar from "../Sidebar";
-import AdminTeams from "../AdminTeams";
+import AdminDashboard from "../Dashboard/AdminDashboard";
+import AdminTimesheets from "../Dashboard/AdminTimesheets";
+import AdminSidebar from "../Dashboard/Sidebar";
+import AdminTeams from "../Dashboard/AdminTeams";
 
 function Routing() {
   return (
