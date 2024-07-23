@@ -17,7 +17,8 @@ function AdminSidebar() {
     <div style={{ display: "flex", height: "100vh", color: "black" }}>
       <Sidebar
         className="app"
-        width="210px"
+        collapsedWidth="65px"
+        width="220px"
         style={{ backgroundColor: "darkgreen", border: "none"}}
         collapsed={collapsed}
       >

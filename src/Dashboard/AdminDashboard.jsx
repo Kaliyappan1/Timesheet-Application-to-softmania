@@ -1,6 +1,6 @@
 import React from 'react'
 import '../assets/styles/AdminDashboard.css'
-import { Avatar, Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material'
+import { AppBar, Avatar, Box, Button, Card, CardActions, CardContent, Stack, Toolbar, Typography } from '@mui/material'
 import PeopleIcon from '@mui/icons-material/People';
 import UpdateIcon from '@mui/icons-material/Update';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
@@ -50,7 +50,8 @@ function AdminDashboard() {
               <AdminSidebar/>
           </div>
           <div className="admin-dashboard-content">
-          <div className="admin-Header">
+          <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+
               <div>
               <Typography sx={{fontSize: 25, fontWeight: 700,ml:2}}>Admin Dashboard</Typography>
               </div>
@@ -59,8 +60,15 @@ function AdminDashboard() {
               <Avatar {...stringAvatar('Kaliyappan')} />
              </Stack>
              </div>
-          </div>
-        
+          </Box>
+          
+        <Box sx={{flexGrow: 1}}>
+            <Toolbar>
+            <Typography sx={{flexGrow:1, fontSize: 25, fontWeight: 700,ml:2}}>Admin Dashboard</Typography>
+            <Avatar {...stringAvatar('Kaliyappan')} />
+            </Toolbar>
+            
+        </Box>
 
            <div className="admin-content">
            <div className="employee-container">
