@@ -8,15 +8,17 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
+import { Box } from "@mui/material";
 
 function AdminSidebar() {
   const [collapsed, setCollapsed] = React.useState(false);
   return (
+    
+   
+  <Box>
 
-    <div className="sidebar">
-    <div style={{ display: "flex", height: "100vh", color: "black" }}>
       <Sidebar
-        className="app"
+        
         collapsedWidth="65px"
         width="220px"
         style={{ backgroundColor: "darkgreen", border: "none"}}
@@ -52,9 +54,8 @@ function AdminSidebar() {
           </MenuItem>
         </Menu>
       </Sidebar>
-    </div>
-
-    </div>
+  </Box>
+    
    
   );
 }

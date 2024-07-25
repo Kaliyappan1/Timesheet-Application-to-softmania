@@ -1,5 +1,5 @@
-import  'react'
-import './assets/styles/App.css'
+import "react";
+import "./assets/styles/App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./scenes/global/Header";
 import Home from "./scenes/home/Home";
@@ -11,14 +11,11 @@ import AdminDashboard from "./scenes/dashboard/AdminDashboard";
 import AdminTimesheets from "./scenes/dashboard/AdminTimesheets";
 import AdminSidebar from "./scenes/dashboard/Sidebar";
 import AdminTeams from "./scenes/dashboard/AdminTeams";
-
+import { ThemeProvider } from "styled-components";
 
 function App() {
-  
   return (
-   
-    
-    <BrowserRouter>
+    <ThemeProvider>
       <Routes>
         <Route
           path="/"
@@ -65,36 +62,12 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/admin-dashboard"
-          element={
-            <>
-
-              <AdminDashboard />
-            </>
-          }
-        />
-        <Route
-          path="/admin-timesheets"
-          element={
-            <>
-
-              <AdminTimesheets />
-            </>
-          }
-        />
-        <Route
-          path="/admin-teams"
-          element={
-            <>
-              <AdminTeams />
-            </>
-          }
-        />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-timesheets" element={<AdminTimesheets />} />
+        <Route path="/admin-teams" element={<AdminTeams />} />
       </Routes>
-    </BrowserRouter>
-    
-  )
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
