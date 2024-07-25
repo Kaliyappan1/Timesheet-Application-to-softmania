@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/Sidebar.css";
+import "../../assets/styles/Sidebar.css";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";

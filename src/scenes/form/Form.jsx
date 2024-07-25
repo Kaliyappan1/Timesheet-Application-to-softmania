@@ -1,5 +1,5 @@
 import React from "react";
-import "./assets/styles/Form.css";
+import "../../assets/styles/Form.css";
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ import {
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Textarea } from "@mui/joy";
-import theme from "./components/Theme";
+import theme from "../../components/Theme";
 
 function Form() {
   const [attendene, setAttendence] = React.useState("");

@@ -1,7 +1,6 @@
 import React from 'react'
-import "../assets/styles/Admin.css"
-import { Link } from 'react-router-dom'
-import { Box, Button, Card, Checkbox, TextField } from '@mui/material'
+import "../../assets/styles/Admin.css"
+import { Box, Card, Checkbox, TextField } from '@mui/material'
 
 function Admin() {
   return (
