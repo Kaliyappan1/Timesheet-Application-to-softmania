@@ -12,10 +12,12 @@ import AdminTimesheets from "./scenes/dashboard/AdminTimesheets";
 import AdminSidebar from "./scenes/dashboard/Sidebar";
 import AdminTeams from "./scenes/dashboard/AdminTeams";
 import { ThemeProvider } from "styled-components";
+import theme from "./components/Theme";
 
 function App() {
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
       <Routes>
         <Route
           path="/"
@@ -66,6 +68,7 @@ function App() {
         <Route path="/admin-timesheets" element={<AdminTimesheets />} />
         <Route path="/admin-teams" element={<AdminTeams />} />
       </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
