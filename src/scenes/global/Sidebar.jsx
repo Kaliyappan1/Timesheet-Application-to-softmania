@@ -6,17 +6,17 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import AdminDashboard from "../dashboard/AdminDashboard";
 import { Box } from "@mui/material";
+import AdminTimesheets from "../dashboard/AdminTimesheets";
+import AdminTeams from "../dashboard/AdminTeams";
 
 function AdminSidebar() {
   const [collapsed, setCollapsed] = React.useState(false);
  
   return (
-    
-   
-  <Box>
+  
 
       <Sidebar
         
@@ -39,13 +39,13 @@ function AdminSidebar() {
             Dashboard
           </MenuItem>
           <MenuItem
-            component={<Link to="/admin-timesheets" />}
+            component={<Link to="/admin-Timesheets" />}
             icon={<AccessTimeFilledIcon />}
           >
             Timesheets
           </MenuItem>
           <MenuItem
-            component={<Link to="/admin-teams" />}
+            component={<Link to="/admin-Teams" />}
             icon={<GroupsIcon />}
           >
             Teams
@@ -55,7 +55,6 @@ function AdminSidebar() {
           </MenuItem>
         </Menu>
       </Sidebar>
-  </Box>
     
    
   );
