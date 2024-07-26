@@ -1,5 +1,5 @@
 import React from 'react'
-import '../assets/styles/AdminDashboard.css'
+import '../../assets/styles/AdminDashboard.css'
 import { AppBar, Avatar, Box, Button, Card, CardActions, CardContent, Stack, Toolbar, Typography } from '@mui/material'
 import PeopleIcon from '@mui/icons-material/People';
 import UpdateIcon from '@mui/icons-material/Update';

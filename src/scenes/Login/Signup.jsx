@@ -1,10 +1,10 @@
 import React from "react";
-import "../assets/styles/Login.css";
+import "../../assets/styles/Login.css";
 import { Box, Button, Card, Checkbox, TextField, ThemeProvider } from "@mui/material";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
-import theme from "../components/Theme";
+import theme from "../../components/Theme";
 
 function Login() {
   return (

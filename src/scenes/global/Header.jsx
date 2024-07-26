@@ -1,8 +1,8 @@
 import { AppBar, Box, Button, ThemeProvider, Toolbar} from '@mui/material'
 import React from 'react'
-import logo from "./assets/images/logo.png"
+import logo from "../../assets/images/logo.png"
 import { Link } from 'react-router-dom'
-import theme from './components/Theme'
+import theme from '../../components/Theme'
 
 
 
