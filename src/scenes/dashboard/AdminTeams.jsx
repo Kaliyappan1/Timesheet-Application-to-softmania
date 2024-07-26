@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AdminSidebar from "./Sidebar";
+import AdminSidebar from "../global/Sidebar";
 
 function createData(name, role, contact) {
   return { name, role, contact };

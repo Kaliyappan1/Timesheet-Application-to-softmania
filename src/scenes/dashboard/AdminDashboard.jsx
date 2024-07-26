@@ -4,7 +4,7 @@ import { AppBar, Avatar, Box, Button, Card, CardActions, CardContent, Stack, Too
 import PeopleIcon from '@mui/icons-material/People';
 import UpdateIcon from '@mui/icons-material/Update';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import AdminSidebar from './Sidebar';
+import AdminSidebar from '../global/Sidebar';
 import { Link } from 'react-router-dom';
 
 
@@ -61,14 +61,6 @@ function AdminDashboard() {
              </Stack>
              </div>
           </Box>
-          
-        <Box sx={{flexGrow: 1}}>
-            <Toolbar>
-            <Typography sx={{flexGrow:1, fontSize: 25, fontWeight: 700,ml:2}}>Admin Dashboard</Typography>
-            <Avatar {...stringAvatar('Kaliyappan')} />
-            </Toolbar>
-            
-        </Box>
 
            <div className="admin-content">
            <div className="employee-container">
