@@ -1,3 +1,4 @@
-.AdminSidebar{
-   position: sticky;
+.sidebar{
+   background: #21472200;
+   border-radius: 20px 20px;
 }

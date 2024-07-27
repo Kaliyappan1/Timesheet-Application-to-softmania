@@ -8,6 +8,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Grid,
   Stack,
   Toolbar,
   Typography,
@@ -65,6 +66,26 @@ function AdminDashboard() {
         </div>
       </Box>
 
+    <Card>
+      <CardContent>
+        <Typography variant="h6">Employees</Typography>
+        <Grid container spacing={2} alignItems="center" mt={.5}>
+          <Grid item>
+            <PeopleIcon fontSize="large" />
+          </Grid>
+          <Grid item>
+            <Typography variant="h6">8</Typography>
+          </Grid>
+        </Grid>
+        <Box mt={2}>
+        <Link to="/admin-teams">
+                <Button size="small" color="success">
+                  Manage Employees
+                </Button>
+              </Link>
+        </Box>
+      </CardContent>
+    </Card>
       <div className="admin-content">
         <div className="employee-container">
           <Card sx={{ minWidth: 250, minHeight: 200, m: 3 }}>

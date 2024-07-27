@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../assets/styles/Sidebar.css";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -6,25 +6,23 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link, Route, Routes } from "react-router-dom";
-import AdminDashboard from "../dashboard/AdminDashboard";
-import { Box } from "@mui/material";
-import AdminTimesheets from "../dashboard/AdminTimesheets";
-import AdminTeams from "../dashboard/AdminTeams";
+import { Link } from "react-router-dom";
 
 function AdminSidebar() {
   const [collapsed, setCollapsed] = React.useState(false);
- 
-  return (
   
 
-      <Sidebar
-        
+  return (
+  
+        <Sidebar
+        transitionDuration={500}
         collapsedWidth="65px"
-        width="220px"
-        style={{ backgroundColor: "darkgreen", border: "none"}}
+        backgroundColor="#0C1C17"
+        rootstyles={{border: 0}}
+        width="220px" 
         collapsed={collapsed}
-      >
+        >
+      
         <Menu style={{ display: "flex", alignContent: "center" }}>
           <MenuItem
             className="menu1"

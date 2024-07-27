@@ -1,9 +1,5 @@
 
-.adminDashboard{
-    display: flex;
-    flex-direction: column;
-    width: -webkit-fill-available;    
-}
+
 .admin-content{
     display: flex;
     

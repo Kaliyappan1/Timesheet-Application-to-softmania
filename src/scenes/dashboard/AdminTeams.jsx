@@ -66,9 +66,7 @@ function AdminTeams() {
 
   return (
     <div className="adminTeams">
-      <div className="adminTeamsSidebar">
-        <AdminSidebar/>
-      </div>
+     
       <div className="adminTeamsContent">
       <ThemeProvider theme={theme}>
         <div className="admin-Header">
