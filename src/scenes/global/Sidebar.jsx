@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "../../assets/styles/Sidebar.css";
-import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 
 function AdminSidebar() {
   const [collapsed, setCollapsed] = React.useState(false);
