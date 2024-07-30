@@ -11,8 +11,8 @@ const SidebarContext = createContext();
 function AdminSidebar({ children }) {
   const [collapsed, setCollapsed] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [ sidebarItems, setSidebarItems] = useState([
 
-  const sidebarItems = [
     {
       icon: <MdDashboard size={25} />,
       text: "Dashboard",
@@ -37,7 +37,14 @@ function AdminSidebar({ children }) {
       route: '/logout',
       alert: false,
     },
-  ];
+  ])
+
+  const handleItemClick = (index) => {
+    setActiveIndex(index);
+    setSidebarItems((prevItems) => prevItems.map((item, i) => 
+    i === index ? { ...item, alert: false} : item));
+  }
+ 
 
   return (
     <>
@@ -63,7 +70,7 @@ function AdminSidebar({ children }) {
               {sidebarItems.map((item, index) => (
                 <li
                   key={index}
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => handleItemClick(index)}
                   className={`relative flex items-center py-3 px-2 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
                     activeIndex === index
                       ? "bg-gradient-to-tr from-green-200 to-green-100 text-black"
