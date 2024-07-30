@@ -1,63 +1,69 @@
-import { createContext, useState, useContext } from "react";
-import { BiLogOut } from "react-icons/bi";
+import { createContext, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
-import { IoIosTimer } from "react-icons/io";
-import { RiTeamFill } from "react-icons/ri";
+import { MdSpaceDashboard } from "react-icons/md";
+import { IoMdLogOut, IoMdTime } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { BsFillPeopleFill } from "react-icons/bs";
 
 const SidebarContext = createContext();
 
 function AdminSidebar({ children }) {
   const [collapsed, setCollapsed] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [ sidebarItems, setSidebarItems] = useState([
-
+  const [sidebarItems, setSidebarItems] = useState([
     {
-      icon: <MdDashboard size={25} />,
+      icon: <MdSpaceDashboard size={25} />,
       text: "Dashboard",
-      route: '/admin-Dashboard',
+      route: "/admin-Dashboard",
       alert: false,
     },
     {
-      icon: <IoIosTimer size={25} />,
+      icon: <IoMdTime size={25} />,
       text: "Timesheet",
-      route: '/admin-Timesheets',
+      route: "/admin-Timesheets",
       alert: true,
     },
     {
-      icon: <RiTeamFill size={25} />,
+      icon: <BsFillPeopleFill size={25} />,
       text: "Teams",
-      route: '/admin-Teams',
+      route: "/admin-Teams",
       alert: true,
     },
     {
-      icon: <BiLogOut size={25} />,
+      icon: <IoMdLogOut size={25} />,
       text: "Logout",
-      route: '/logout',
+      route: "/logout",
       alert: false,
     },
-  ])
+  ]);
 
   const handleItemClick = (index) => {
     setActiveIndex(index);
-    setSidebarItems((prevItems) => prevItems.map((item, i) => 
-    i === index ? { ...item, alert: false} : item));
-  }
- 
+    setSidebarItems((prevItems) =>
+      prevItems.map((item, i) =>
+        i === index ? { ...item, alert: false } : item
+      )
+    );
+  };
 
   return (
     <>
       <aside className="  relative">
-        <nav className="h-full  flex flex-col b shadow-lg" style={{ top: '30px', boxShadow: '0 4px 6px black, 0 10px 20px black'}}>
+        <nav
+          className="h-full flex flex-col b shadow-lg"
+          style={{
+            top: "30px",
+            boxShadow: "0 4px 6px black, 0 10px 20px black",
+          }}
+        >
           <div className="p-4 mt-9 pb-3 flex justify-between items-center">
-            <h1
-              className={`overflow-hidden transition-all ${
-                collapsed ? "text-3xl flex justify-center" : "w-0"
-              }`}
+            <h2
+              className={`overflow-hidden first-letter:size-1 transition-all ${
+                collapsed ? "text-3xl flex justify-center px-4" : "w-0 " 
+              } transition-all duration-300`}
             >
-              Softmania
-            </h1>
+              Soft Mania
+            </h2>
             <button
               onClick={() => setCollapsed((col) => !col)}
               className="p-2 rounded-lg"
@@ -73,31 +79,31 @@ function AdminSidebar({ children }) {
                   onClick={() => handleItemClick(index)}
                   className={`relative flex items-center py-3 px-2 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
                     activeIndex === index
-                      ? "bg-gradient-to-tr from-green-200 to-green-100 text-black"
-                      : "hover:bg-green-400/25 text-gray-300"
-                  }`}
+                      ? "bg-gradient-to-tr from-green-400 to-green-6 text-white"
+                      : "hover:bg-gradient-to-tr  from-green-400/20 to-green-1 text-gray-300"
+                  } transition-all duration-300`}
                 >
-                  <Link to={item.route} className="flex items-center w-full">
-                  {item.icon}
-                  <span
-                    className={`overflow-hidden transition-all ${
-                      collapsed ? "w-52 ml-3" : "w-0"
-                    }`}
-                  >
-                    {item.text}
-                  </span>
-                  {item.alert && (
-                    <div
-                      className={`absolute right-2 w-2 h-2 rounded bg-green-700 ${
-                        collapsed ? "" : "top-2"
+                  <Link to={item.route} className="flex items-center w-full text-white">
+                    {item.icon}
+                    <span
+                      className={`overflow-hidden transition-all text-white ${
+                        collapsed ? "w-52 ml-3" : "w-0"
                       }`}
-                    ></div>
-                  )}
+                    >
+                      {item.text}
+                    </span>
+                    {item.alert && (
+                      <div
+                        className={`absolute right-2 w-2 h-2 rounded bg-green-400 ${
+                          collapsed ? "" : "top-2"
+                        }`}
+                      ></div>
+                    )}
                   </Link>
 
                   {!collapsed && (
                     <div
-                      className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-green-100 text-green-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+                      className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-green-100 text-black text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
                     >
                       {item.text}
                     </div>
