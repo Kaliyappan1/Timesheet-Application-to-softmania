@@ -17,6 +17,8 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Grid,
+  Box,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AdminSidebar from "../global/Sidebar";
@@ -62,97 +64,109 @@ function AdminTeams() {
       children: `${name.split(" ")[0][0]}`,
     };
   }
-  // string to avatar end
 
   return (
-    <div className="adminTeams">
-     
-      <div className="adminTeamsContent">
-      <ThemeProvider theme={theme}>
-        <div className="admin-Header">
-          {/* admin header line */}
-          <div>
-            <Typography sx={{ fontSize: 25, fontWeight: 700, ml: 2 }}>
-              Teams
-            </Typography>
-          </div>
-          <div>
-            <Avatar {...stringAvatar("Kali")} />
-          </div>
-        </div>
-        <div className="adminTeam-row">
-          <div className="admin-search">
-            <Paper
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                width: {
-                  xs: 100,
-                  sm: 200,
-                  md: 200,
-                  lg: 350,
-                  xl: 350,
-                },
-              }}
+    <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
+      <Box sx={{ flexGrow: 1, p: 3 }}>
+        <ThemeProvider theme={theme}>
+          <Grid container spacing={3}>
+            <Grid
+              item
+              xs={12}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search..."
-                inputProps={{ "aria-label": "search google maps" }}
-              />
+              <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
+                Teams
+              </Typography>
+              <Avatar {...stringAvatar("Kali")} />
+            </Grid>
 
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-          </div>
-          <div className="adminAddTeam">
-            <Button sx={{ color: "secondary.light" }} variant="contained">
-              + Add Team
-            </Button>
-          </div>
-        </div>
-        <div className="adminTeamTable">
-          <TableContainer component={Paper} sx={{ height: 450 }}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ pr: 5, pl: 5 }}>Name</TableCell>
-                  <TableCell sx={{ pr: 5, pl: 5 }}>Role</TableCell>
-                  <TableCell sx={{ pr: 5, pl: 5 }}>Contact</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row" sx={{ pr: 5, pl: 5 }}>
-                      {row.name}
-                    </TableCell>
-                    <TableCell sx={{ pr: 5, pl: 5 }}>{row.role}</TableCell>
-                    <TableCell sx={{ pr: 5, pl: 5 }}>{row.contact}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-        <div className="adminTeamPagination">
-          <Stack spacing={2}>
-            <Pagination
-              sx={{ backgroundColor: "secondary.light", borderRadius: 5, p: 1 }}
-              color="primary"
-              count={4}
-              variant="contained"
-            />
-          </Stack>
-        </div>
-      </ThemeProvider>
-      </div>
-    </div>
+            <Grid item xs={12} md={8}>
+              <Paper
+                component="form"
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search..."
+                  inputProps={{ "aria-label": "search teams" }}
+                />
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              display="flex"
+              justifyContent={{ xs: "flex-start", md: "flex-end" }}
+            >
+              <Button sx={{ color: "secondary.light" }} variant="contained">
+                + Add Team
+              </Button>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TableContainer component={Paper}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Role</TableCell>
+                      <TableCell>Contact</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row) => (
+                      <TableRow
+                        key={row.name}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell>{row.role}</TableCell>
+                        <TableCell>{row.contact}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+
+            <Grid item xs={12} display="flex" justifyContent="center">
+              <Stack spacing={2}>
+                <Pagination
+                  sx={{
+                    backgroundColor: "secondary.light",
+                    borderRadius: 5,
+                    p: 1,
+                  }}
+                  color="primary"
+                  count={4}
+                  variant="contained"
+                />
+              </Stack>
+            </Grid>
+          </Grid>
+        </ThemeProvider>
+      </Box>
+    </Box>
   );
 }
 

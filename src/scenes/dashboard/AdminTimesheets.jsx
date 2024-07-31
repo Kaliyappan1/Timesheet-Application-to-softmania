@@ -1,7 +1,17 @@
 import React from "react";
-import "../../assets/styles/AdminTimesheets.css";
-import { Avatar, Paper, Stack, ThemeProvider, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Grid,
+  IconButton,
+  InputBase,
+  Paper,
+  Stack,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../components/Theme";
 
 const columns = [
@@ -120,70 +130,77 @@ function AdminTimesheets() {
   // string to avatar end
 
   return (
-    
-    <div className="admin-Timesheets">
-      <ThemeProvider theme={theme}>
+    <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
+      <Box sx={{ flexGrow: 1, p: 3 }}>
+        <Grid container spacing={3}>
+          <Grid
+            item
+            xs={12}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
+              Timesheets
+            </Typography>
+            <Avatar {...stringAvatar("Kali")} />
+          </Grid>
 
-      <div className="admin-Header">
-        <div>
-          <Typography sx={{ fontSize: 25, fontWeight: 700, ml: 2 }}>
-            Timesheets
-          </Typography>
-        </div>
-        <div>
-          <Stack>
-            <Avatar {...stringAvatar("Kaliy")} />
-          </Stack>
-        </div>
-      </div>
-      {/* <div className="admin-search">
-        <Paper
-          component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            width: 400,
-          }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search Timesheets..."
-            inputProps={{ "aria-label": "search google maps" }}
-          />
-
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-      </div> */}
-      <div className="admin-timesheet-table">
-        <Paper>
-          <div style={{ height: 600, width: "100%"}}>
-            <DataGrid
-            
+          <Grid item xs={4}>
+            <Paper
+              component="form"
               sx={{
-                boxShadow: 2,
-                "& .MuiDataGrid-cell:hover": {
-                  borderColor: "success.light",
-                  border: 1,
-                },
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
               }}
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 },
-                },
-              }}
-              pageSizeOptions={[10, 20, 40]}
-              checkboxSelection
-            />
-          </div>
-        </Paper>
-      </div>
-      </ThemeProvider>
-    </div>
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search..."
+                inputProps={{ "aria-label": "search teams" }}
+              />
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            display="flex"
+            justifyContent={{ xs: "flex-start", md: "flex-end" }}
+          ></Grid>
+        </Grid>
+              {/* data grid */}
+        <Grid item xs={5} sx={{mt: 5}} md={6} lg={8}>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <div style={{ height: 550, width: "100%" }}>
+              <DataGrid
+                sx={{
+                  boxShadow: 2,
+                  "& .MuiDataGrid-cell:hover": {
+                    borderColor: "success.light",
+                    border: 1,
+                  },
+                }}
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 10 },
+                  },
+                }}
+                pageSizeOptions={[10, 20, 40]}
+                checkboxSelection
+              />
+            </div>
+          </Paper>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
 
