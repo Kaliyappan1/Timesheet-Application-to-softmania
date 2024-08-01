@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoMdLogOut, IoMdTime } from "react-icons/io";
@@ -8,7 +8,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 const SidebarContext = createContext();
 
 function AdminSidebar({ children }) {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(window.innerWidth <= 768);
   const [activeIndex, setActiveIndex] = useState(0);
   const [sidebarItems, setSidebarItems] = useState([
     {
@@ -37,6 +37,18 @@ function AdminSidebar({ children }) {
     },
   ]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 2000) {
+        setCollapsed(false);
+      } else {
+        setCollapsed(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleItemClick = (index) => {
     setActiveIndex(index);
     setSidebarItems((prevItems) =>
@@ -48,9 +60,9 @@ function AdminSidebar({ children }) {
 
   return (
     <>
-      <aside className="  relative">
+      <aside className={`relative ${collapsed ? 'collapsed' : ''}`}>
         <nav
-          className="h-full flex flex-col b shadow-lg"
+          className="h-full flex flex-col shadow-lg"
           style={{
             top: "30px",
             boxShadow: "0 4px 6px black, 0 10px 20px black",
@@ -59,16 +71,16 @@ function AdminSidebar({ children }) {
           <div className="p-4 mt-9 pb-3 flex justify-between items-center">
             <h2
               className={`overflow-hidden first-letter:size-1 transition-all ${
-                collapsed ? "text-3xl flex justify-center px-4" : "w-0 " 
+                collapsed ? "text-3xl flex justify-center px-4" : "w-0"
               } transition-all duration-300`}
             >
               Soft Mania
             </h2>
             <button
               onClick={() => setCollapsed((col) => !col)}
-              className="p-2 rounded-lg"
+              
             >
-              {collapsed ? <FaArrowLeft /> : <FaArrowRight />}
+              {collapsed ? <button className="hover:bg-gradient-to-tr from-green-600 to-green-700 text-white p-2 font-medium rounded-md cursor-pointer"><FaArrowLeft /></button> : <button className=" hover:bg-gradient-to-tr from-green-700 to-green-600 text-white p-2 font-medium rounded-md cursor-pointer"><FaArrowRight /></button>}
             </button>
           </div>
           <SidebarContext.Provider value={{ collapsed }}>
@@ -79,8 +91,8 @@ function AdminSidebar({ children }) {
                   onClick={() => handleItemClick(index)}
                   className={`relative flex items-center py-3 px-2 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
                     activeIndex === index
-                      ? "bg-gradient-to-tr from-green-400 to-green-6 text-white"
-                      : "hover:bg-gradient-to-tr  from-green-400/20 to-green-1 text-gray-300"
+                      ? "bg-gradient-to-tr from-green-400 to-green-600 text-white"
+                      : "hover:bg-gradient-to-tr from-green-700/20 to-green-800 text-gray-800"
                   } transition-all duration-300`}
                 >
                   <Link to={item.route} className="flex items-center w-full text-white">
@@ -103,7 +115,7 @@ function AdminSidebar({ children }) {
 
                   {!collapsed && (
                     <div
-                      className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-green-100 text-black text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+                      className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-green-100 text-black text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
                     >
                       {item.text}
                     </div>

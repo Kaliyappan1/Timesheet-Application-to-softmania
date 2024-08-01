@@ -99,35 +99,6 @@ const rows = [
 ];
 
 function AdminTimesheets() {
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = "#";
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    /* eslint-enable no-bitwise */
-
-    return color;
-  }
-
-  function stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(" ")[0][0]}`,
-    };
-  }
-  // string to avatar end
 
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
@@ -143,7 +114,7 @@ function AdminTimesheets() {
             <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
               Timesheets
             </Typography>
-            <Avatar {...stringAvatar("Kali")} />
+        <Avatar sx={{backgroundColor: "green"}} >K</Avatar>
           </Grid>
 
           <Grid item xs={4}>
@@ -174,7 +145,10 @@ function AdminTimesheets() {
             justifyContent={{ xs: "flex-start", md: "flex-end" }}
           ></Grid>
         </Grid>
+
               {/* data grid */}
+            <ThemeProvider theme={theme}>
+
         <Grid item xs={5} sx={{mt: 5}} md={6} lg={8}>
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <div style={{ height: 550, width: "100%" }}>
@@ -199,6 +173,7 @@ function AdminTimesheets() {
             </div>
           </Paper>
         </Grid>
+            </ThemeProvider>
       </Box>
     </Box>
   );
