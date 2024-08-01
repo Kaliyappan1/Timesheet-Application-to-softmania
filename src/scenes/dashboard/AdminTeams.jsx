@@ -36,35 +36,6 @@ const rows = [
 ];
 
 function AdminTeams() {
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = "#";
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    /* eslint-enable no-bitwise */
-
-    return color;
-  }
-
-  function stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(" ")[0][0]}`,
-    };
-  }
-
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
       <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -80,10 +51,10 @@ function AdminTeams() {
               <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
                 Teams
               </Typography>
-              <Avatar {...stringAvatar("Kali")} />
+              <Avatar sx={{ backgroundColor: "green" }}>K</Avatar>
             </Grid>
 
-            <Grid item xs={12} md={4}>
+            <Grid item xs={6} md={4}>
               <Paper
                 component="form"
                 sx={{
@@ -114,7 +85,21 @@ function AdminTeams() {
               display="flex"
               justifyContent={{ xs: "flex-start", md: "flex-end" }}
             >
-              <Button sx={{ color: "secondary.light" }} variant="contained">
+              <Button
+                sx={{
+                  color: "white",
+                  backgroundColor: "green",
+                  "&:hover": {
+                    backgroundColor: "#004201",
+                    boxShadow: "none",
+                  },
+                  "&:active": {
+                    boxShadow: "none",
+                    backgroundColor: "green",
+                  },
+                }}
+                variant="contained"
+              >
                 + Add Team
               </Button>
             </Grid>
@@ -153,7 +138,7 @@ function AdminTeams() {
               <Stack spacing={2}>
                 <Pagination
                   sx={{
-                    backgroundColor: "secondary.light",
+                    backgroundColor: "white",
                     borderRadius: 5,
                     p: 1,
                   }}
