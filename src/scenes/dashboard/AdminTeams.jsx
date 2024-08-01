@@ -83,7 +83,7 @@ function AdminTeams() {
               <Avatar {...stringAvatar("Kali")} />
             </Grid>
 
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={4}>
               <Paper
                 component="form"
                 sx={{
@@ -110,7 +110,7 @@ function AdminTeams() {
             <Grid
               item
               xs={12}
-              md={4}
+              md={8}
               display="flex"
               justifyContent={{ xs: "flex-start", md: "flex-end" }}
             >

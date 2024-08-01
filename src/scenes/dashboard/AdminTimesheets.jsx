@@ -174,7 +174,10 @@ function AdminTimesheets() {
             justifyContent={{ xs: "flex-start", md: "flex-end" }}
           ></Grid>
         </Grid>
+
               {/* data grid */}
+            <ThemeProvider theme={theme}>
+
         <Grid item xs={5} sx={{mt: 5}} md={6} lg={8}>
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <div style={{ height: 550, width: "100%" }}>
@@ -199,6 +202,7 @@ function AdminTimesheets() {
             </div>
           </Paper>
         </Grid>
+            </ThemeProvider>
       </Box>
     </Box>
   );

@@ -39,10 +39,10 @@ function AdminSidebar({ children }) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setCollapsed(true);
-      } else {
+      if (window.innerWidth <= 2000) {
         setCollapsed(false);
+      } else {
+        setCollapsed(true);
       }
     };
     window.addEventListener("resize", handleResize);
