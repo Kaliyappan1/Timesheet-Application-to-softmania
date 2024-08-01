@@ -78,9 +78,9 @@ function AdminSidebar({ children }) {
             </h2>
             <button
               onClick={() => setCollapsed((col) => !col)}
-              className="p-2 rounded-lg"
+              
             >
-              {collapsed ? <FaArrowRight /> : <FaArrowLeft />}
+              {collapsed ? <button className="hover:bg-gradient-to-tr from-green-600 to-green-700 text-white p-2 font-medium rounded-md cursor-pointer"><FaArrowLeft /></button> : <button className=" hover:bg-gradient-to-tr from-green-700 to-green-600 text-white p-2 font-medium rounded-md cursor-pointer"><FaArrowRight /></button>}
             </button>
           </div>
           <SidebarContext.Provider value={{ collapsed }}>
