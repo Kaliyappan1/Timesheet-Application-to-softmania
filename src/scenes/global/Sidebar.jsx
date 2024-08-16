@@ -8,7 +8,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 const SidebarContext = createContext();
 
 function AdminSidebar({ children }) {
-  const [collapsed, setCollapsed] = useState(window.innerWidth <= 768);
+  const [collapsed, setCollapsed] = useState(window.innerWidth <= 0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [sidebarItems, setSidebarItems] = useState([
     {
