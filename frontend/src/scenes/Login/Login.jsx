@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/styles/Login.css";
 import {
   Box,
@@ -13,10 +13,15 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Theme from "../../components/Theme";
 import { auth, googleAuthProvider } from "../../../firebase";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth"; // Import signInWithEmailAndPassword
 import GoogleIcon from "@mui/icons-material/Google";
 
-export default function Signup() {
+export default function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
   const history = useNavigate();
 
   useEffect(() => {
@@ -26,12 +31,54 @@ export default function Signup() {
     }
   }, [history]);
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleLogin = async () => {
+    try {
+      const { email, password } = formData;
+      
+      // Perform login with MongoDB
+      const response = await fetch("/api/login", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Error response text:", errorText);
+        throw new Error(errorText);
+      }
+
+      const data = await response.json();
+      if (data.message === "Login successful") {
+        // Save user credentials locally
+        localStorage.setItem(
+          "employes",
+          JSON.stringify({
+            uid: data.user.uid,
+            displayName: data.user.displayName,
+            email: data.user.email,
+            photoURL: data.user.photoURL,
+          })
+        );
+        history("/form");
+      } else {
+        console.log(data.message);
+      }
+    } catch (error) {
+      console.error("Error during login:", error.message);
+    }
+  };
+
+  const googleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
       const user = result.user;
 
-      // save credintial locally
+      // Save user credentials locally
       localStorage.setItem(
         "employes",
         JSON.stringify({
@@ -41,8 +88,9 @@ export default function Signup() {
           photoURL: user.photoURL,
         })
       );
+      history("/form");
     } catch (error) {
-      console.error("Error during login:");
+      console.error("Error during Google login:", error.message);
     }
   };
 
@@ -65,13 +113,24 @@ export default function Signup() {
             autoComplete="off"
           >
             <div>
-              <TextField id="outlined-basic" label="email" variant="outlined" />
+              <TextField
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
             <div>
               <TextField
-                id="outlined-basic"
-                label="password"
+                id="password"
+                name="password"
+                label="Password"
                 variant="outlined"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
           </Box>
@@ -79,7 +138,7 @@ export default function Signup() {
             <Checkbox />
             <p className="login-remember">Remember me</p>
             <Link to="forget-password">
-              <p className="login-forgetPassword">forget password</p>
+              <p className="login-forgetPassword">Forget password</p>
             </Link>
           </div>
           <Box className="login-button-center">
@@ -92,7 +151,7 @@ export default function Signup() {
                   marginTop: "15px",
                 }}
               >
-                Dont't have account ? <br />
+                Don't have an account? <br />
                 <Link to="/signup">
                   <Typography className="signup-navigate-link">
                     Please Signup
@@ -111,17 +170,19 @@ export default function Signup() {
               }}
               variant="contained"
               size="contained"
+              onClick={handleLogin}
             >
               Login
             </Button>
 
-            <Divider  variant="middle" flexItem >Or</Divider>
+            <Divider variant="middle" flexItem>
+              Or
+            </Divider>
             <Button
               startIcon={<GoogleIcon />}
               variant="outlined"
-              onClick={handleLogin}
+              onClick={googleLogin}
               sx={{
-               
                 pb: 1,
                 pt: 1,
                 mt: 2,
