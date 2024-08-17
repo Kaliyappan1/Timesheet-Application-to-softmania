@@ -15,7 +15,6 @@ import Theme from "../../components/Theme";
 import { auth, googleAuthProvider } from "../../../firebase";
 import { signInWithPopup } from "firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
-
 export default function Signup() {
   const history = useNavigate();
 
@@ -32,7 +31,6 @@ export default function Signup() {
       const user = result.user;
 
       // save credintial locally
-
       localStorage.setItem(
         "employes",
         JSON.stringify({
@@ -43,10 +41,9 @@ export default function Signup() {
         })
       );
     } catch (error) {
-      console.error("Error during sign-in");
+      console.error("Error during login:");
     }
   };
-
   return (
     <div className="login">
       <ThemeProvider theme={Theme}>
