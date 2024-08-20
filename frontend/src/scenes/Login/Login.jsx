@@ -25,11 +25,17 @@ export default function Login() {
   const history = useNavigate();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("employes");
+    const storedEmployes = localStorage.getItem("employes");
+    if (storedEmployes) {
+      history("/form");
+    }
+    const storedUser = localStorage.getItem("users");
     if (storedUser) {
       history("/form");
     }
+
   }, [history]);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,7 +47,7 @@ export default function Login() {
       
       // Perform login with MongoDB
       const response = await fetch("/api/login", {
-        method: "GET",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
@@ -54,17 +60,10 @@ export default function Login() {
 
       const data = await response.json();
       if (data.message === "Login successful") {
-        // Save user credentials locally
-        localStorage.setItem(
-          "employes",
-          JSON.stringify({
-            uid: data.user.uid,
-            displayName: data.user.displayName,
-            email: data.user.email,
-            photoURL: data.user.photoURL,
-          })
-        );
+        localStorage.setItem("users", JSON.stringify(data.user));
         history("/form");
+
+        return
       } else {
         console.log(data.message);
       }

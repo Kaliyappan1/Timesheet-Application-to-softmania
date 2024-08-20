@@ -13,7 +13,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Theme from "../../components/Theme";
 import { auth, googleAuthProvider } from "../../../firebase";
-import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithPopup} from "firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
 
 export default function Signup() {
@@ -27,10 +27,15 @@ export default function Signup() {
   const history = useNavigate();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("employes");
+    const storedEmployes = localStorage.getItem("employes");
+    if (storedEmployes) {
+      history("/form");
+    }
+    const storedUser = localStorage.getItem("users");
     if (storedUser) {
       history("/form");
     }
+
   }, [history]);
 
   const handleChange = (e) => {
