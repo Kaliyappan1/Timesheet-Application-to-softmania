@@ -103,7 +103,7 @@ function Admin() {
             <p className="admin-remember">Remember me</p>
           </div>
           <div className="admin-button">
-            <button class="button-33" role="button" onClick={adminHandle}>
+            <button className="button-33" role="button" onClick={adminHandle}>
               Go Dashboard
             </button>
           </div>
