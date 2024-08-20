@@ -25,10 +25,7 @@ export default function Login() {
   const history = useNavigate();
 
   useEffect(() => {
-    const storedEmployes = localStorage.getItem("employes");
-    if (storedEmployes) {
-      history("/form");
-    }
+   
     const storedUser = localStorage.getItem("users");
     if (storedUser) {
       history("/form");
@@ -79,7 +76,7 @@ export default function Login() {
 
       // Save user credentials locally
       localStorage.setItem(
-        "employes",
+        "users",
         JSON.stringify({
           uid: user.uid,
           displayName: user.displayName,

@@ -14,11 +14,11 @@ import theme from "./components/Theme";
 import AdminDashboard from "./scenes/dashboard/AdminDashboard";
 import AdminTimesheets from "./scenes/dashboard/AdminTimesheets";
 import AdminTeams from "./scenes/dashboard/AdminTeams";
+import Error from "./scenes/global/Error404";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      
       <div className="app">
         <Routes>
           <Route
@@ -32,9 +32,7 @@ function App() {
           />
           <Route
             path="/login"
-            element=
-            
-            {
+            element={
               <>
                 <Header />
                 <Login />
@@ -68,6 +66,7 @@ function App() {
               </>
             }
           />
+
           <Route
             path="/admin-Dashboard"
             element={
@@ -87,7 +86,6 @@ function App() {
                 className="AdminSidebar"
                 style={{ display: "flex", height: "100vh" }}
               >
-                
                 <AdminSidebar />
                 <AdminTimesheets />
               </div>
@@ -105,6 +103,7 @@ function App() {
               </div>
             }
           />
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </ThemeProvider>
