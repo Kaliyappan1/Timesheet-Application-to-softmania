@@ -16,9 +16,9 @@ import AdminTimesheets from "./scenes/dashboard/AdminTimesheets";
 import AdminTeams from "./scenes/dashboard/AdminTeams";
 import Error from "./scenes/global/Error404";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
 
 function App() {
-
   return (
     <ThemeProvider theme={theme}>
       <div className="app">
@@ -66,7 +66,6 @@ function App() {
                 <Header />
                 <Form />
               </ProtectedRoute>
-             
             }
           />
 
@@ -77,8 +76,10 @@ function App() {
                 className="AdminSidebar"
                 style={{ display: "flex", height: "100vh" }}
               >
-                <AdminSidebar />
-                <AdminDashboard />
+                <AdminProtectedRoute>
+                  <AdminSidebar />
+                  <AdminDashboard />
+                </AdminProtectedRoute>
               </div>
             }
           />
@@ -89,8 +90,10 @@ function App() {
                 className="AdminSidebar"
                 style={{ display: "flex", height: "100vh" }}
               >
-                <AdminSidebar />
-                <AdminTimesheets />
+                <AdminProtectedRoute>
+                  <AdminSidebar />
+                  <AdminTimesheets />
+                </AdminProtectedRoute>
               </div>
             }
           />
@@ -101,8 +104,10 @@ function App() {
                 className="AdminSidebar"
                 style={{ display: "flex", height: "100vh" }}
               >
-                <AdminSidebar />
-                <AdminTeams />
+                <AdminProtectedRoute>
+                  <AdminSidebar />
+                  <AdminTeams />
+                </AdminProtectedRoute>
               </div>
             }
           />
