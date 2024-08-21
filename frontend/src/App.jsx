@@ -15,8 +15,10 @@ import AdminDashboard from "./scenes/dashboard/AdminDashboard";
 import AdminTimesheets from "./scenes/dashboard/AdminTimesheets";
 import AdminTeams from "./scenes/dashboard/AdminTeams";
 import Error from "./scenes/global/Error404";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+
   return (
     <ThemeProvider theme={theme}>
       <div className="app">
@@ -60,10 +62,11 @@ function App() {
           <Route
             path="/form"
             element={
-              <>
+              <ProtectedRoute>
                 <Header />
                 <Form />
-              </>
+              </ProtectedRoute>
+             
             }
           />
 

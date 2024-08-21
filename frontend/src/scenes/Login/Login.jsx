@@ -15,24 +15,31 @@ import Theme from "../../components/Theme";
 import { auth, googleAuthProvider } from "../../../firebase";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth"; // Import signInWithEmailAndPassword
 import GoogleIcon from "@mui/icons-material/Google";
+import ForgetPassword from "../../components/ForgetPassword";
 
 export default function Login() {
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const history = useNavigate();
+
+  const handleForgotPassword = () => {
+    setShowForgotPassword(true);
+  }
+
+  const closeModal = () => {
+    setShowForgotPassword(false);
+  }
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const history = useNavigate();
-
   useEffect(() => {
-   
     const storedUser = localStorage.getItem("users");
     if (storedUser) {
       history("/form");
     }
-
   }, [history]);
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,7 +48,7 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const { email, password } = formData;
-      
+
       // Perform login with MongoDB
       const response = await fetch("/api/login", {
         method: "POST",
@@ -60,7 +67,7 @@ export default function Login() {
         localStorage.setItem("users", JSON.stringify(data.user));
         history("/form");
 
-        return
+        return;
       } else {
         console.log(data.message);
       }
@@ -132,10 +139,9 @@ export default function Login() {
           </Box>
           <div className="login-custamized-space">
             <Checkbox />
-            <p className="login-remember">Remember me</p>
-            <Link to="forget-password">
-              <p className="login-forgetPassword">Forget password</p>
-            </Link>
+            <Typography sx={{fontSize: 14}} startIcon={<Checkbox/>} >Remember me</Typography >
+
+            <Button onClick={handleForgotPassword} sx={{fontSize: 12}}>Forget password</Button>
           </div>
           <Box className="login-button-center">
             <div>
@@ -189,6 +195,9 @@ export default function Login() {
             </Button>
           </Box>
         </Card>
+
+        <ForgetPassword open={showForgotPassword} handleClose={closeModal} />
+
       </ThemeProvider>
     </div>
   );
