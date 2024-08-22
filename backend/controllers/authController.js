@@ -1,4 +1,5 @@
 const User = require('../models/UserModel.js');
+const Admin = require('../models/adminModel.js')
 
 // @desc    Register a new user
 // @route   POST /api/signup
@@ -40,3 +41,22 @@ exports.authUser = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+exports.adminUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find the admin by email
+    const admin = await Admin.findOne({ email });
+
+    // Check if admin exists and the password matches
+    if (admin && admin.password === password) {
+      res.status(200).json({ message: 'Login successful', userId: admin._id });
+    } else {
+      res.status(401).json({ message: 'Invalid email or password' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+

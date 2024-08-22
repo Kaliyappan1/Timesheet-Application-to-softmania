@@ -14,11 +14,13 @@ import theme from "./components/Theme";
 import AdminDashboard from "./scenes/dashboard/AdminDashboard";
 import AdminTimesheets from "./scenes/dashboard/AdminTimesheets";
 import AdminTeams from "./scenes/dashboard/AdminTeams";
+import Error from "./scenes/global/Error404";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      
       <div className="app">
         <Routes>
           <Route
@@ -32,9 +34,7 @@ function App() {
           />
           <Route
             path="/login"
-            element=
-            
-            {
+            element={
               <>
                 <Header />
                 <Login />
@@ -62,12 +62,13 @@ function App() {
           <Route
             path="/form"
             element={
-              <>
+              <ProtectedRoute>
                 <Header />
                 <Form />
-              </>
+              </ProtectedRoute>
             }
           />
+
           <Route
             path="/admin-Dashboard"
             element={
@@ -75,8 +76,10 @@ function App() {
                 className="AdminSidebar"
                 style={{ display: "flex", height: "100vh" }}
               >
-                <AdminSidebar />
-                <AdminDashboard />
+                <AdminProtectedRoute>
+                  <AdminSidebar />
+                  <AdminDashboard />
+                </AdminProtectedRoute>
               </div>
             }
           />
@@ -87,9 +90,10 @@ function App() {
                 className="AdminSidebar"
                 style={{ display: "flex", height: "100vh" }}
               >
-                
-                <AdminSidebar />
-                <AdminTimesheets />
+                <AdminProtectedRoute>
+                  <AdminSidebar />
+                  <AdminTimesheets />
+                </AdminProtectedRoute>
               </div>
             }
           />
@@ -100,11 +104,14 @@ function App() {
                 className="AdminSidebar"
                 style={{ display: "flex", height: "100vh" }}
               >
-                <AdminSidebar />
-                <AdminTeams />
+                <AdminProtectedRoute>
+                  <AdminSidebar />
+                  <AdminTeams />
+                </AdminProtectedRoute>
               </div>
             }
           />
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </ThemeProvider>
