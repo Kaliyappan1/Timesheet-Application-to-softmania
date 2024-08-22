@@ -4,15 +4,6 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } 
 
 function ForgotPasswordDialog({ open, handleClose }) {
 
-    const handleSubmit = async(req, res) => {
-        try {
-            const res = await fetch('/api/forget')
-            
-        } catch (error) {
-            console.log("Can't password forget: ", error);
-            
-        }
-    }
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Forgot Password</DialogTitle>
@@ -53,7 +44,7 @@ function ForgotPasswordDialog({ open, handleClose }) {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onSubmit={handleSubmit} onClick={handleClose} color="primary">
+        <Button onClick={handleClose} color="primary">
           Submit
         </Button>
       </DialogActions>
