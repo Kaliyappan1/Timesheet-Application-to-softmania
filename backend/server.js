@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db.js');
 const authRoutes = require('./routes/authRoutes.js');
 const formRoutes = require('./routes/formRoutes.js');
+const teamRoutes = require('./routes/teamRoutes.js');
 // Load environment variables
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 // Routes
 app.use('/api', authRoutes);
 app.use('/api/forms', formRoutes);
+app.use('/api/add', teamRoutes);
 
 const PORT = process.env.PORT || 5000;
 

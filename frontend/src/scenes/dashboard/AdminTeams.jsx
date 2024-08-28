@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/styles/AdminTimesheets.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "../../components/Theme";
@@ -19,23 +19,53 @@ import {
   Typography,
   Grid,
   Box,
+  Modal,
+  TextField,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AdminSidebar from "../global/Sidebar";
+import axios from 'axios';
 
 function createData(name, role, contact) {
   return { name, role, contact };
 }
 
-const rows = [
-  createData("Muruganantham", "admin", "murugan@gmail.com"),
-  createData("Ramany", "trainer", "ramany@gmail.com"),
-  createData("kaliyappan", "web developer", "kaliyappan@gmail.com"),
-  createData("varsha", "python developer", "varsha@gmail.com"),
-  createData("------------", "-------------", "---------"),
-];
-
 function AdminTeams() {
+  const [rows, setRows] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [newTeam, setNewTeam] = useState({ name: '', role: '', contact: '' });
+
+  useEffect(() => {
+    // Fetch initial team data
+    const fetchTeams = async () => {
+      try {
+        const response = await axios.get('/api/teams');
+        setRows(response.data.map(team => createData(team.name, team.role, team.contact)));
+      } catch (error) {
+        console.error('Error fetching team data:', error);
+      }
+    };
+
+    fetchTeams();
+  }, []);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleChange = (e) => {
+    setNewTeam({ ...newTeam, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/add', newTeam);
+      setRows([...rows, createData(response.data.name, response.data.role, response.data.contact)]);
+      handleClose();
+    } catch (error) {
+      console.error('Error adding new team member:', error);
+    }
+  };
+
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
       <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -86,6 +116,7 @@ function AdminTeams() {
               justifyContent={{ xs: "flex-start", md: "flex-end" }}
             >
               <Button
+                onClick={handleOpen}
                 sx={{
                   color: "white",
                   backgroundColor: "green",
@@ -149,6 +180,65 @@ function AdminTeams() {
               </Stack>
             </Grid>
           </Grid>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="add-team-modal"
+            aria-describedby="add-team-description"
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 400,
+                bgcolor: 'background.paper',
+                borderRadius: 1,
+                boxShadow: 24,
+                p: 4,
+              }}
+            >
+              <Typography id="add-team-modal" variant="h6" component="h2">
+                Add Team Member
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  label="Name"
+                  name="name"
+                  value={newTeam.name}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Role"
+                  name="role"
+                  value={newTeam.role}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Contact"
+                  name="contact"
+                  value={newTeam.contact}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 2 }}
+                >
+                  Add
+                </Button>
+              </form>
+            </Box>
+          </Modal>
         </ThemeProvider>
       </Box>
     </Box>
