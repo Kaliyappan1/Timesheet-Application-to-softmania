@@ -18,7 +18,7 @@ app.use(express.json());
 // Routes
 app.use('/api', authRoutes);
 app.use('/api/forms', formRoutes);
-app.use('/api/add', teamRoutes);
+app.use('/api/teams', teamRoutes);
 
 const PORT = process.env.PORT || 5000;
 

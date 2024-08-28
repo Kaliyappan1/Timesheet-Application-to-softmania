@@ -25,8 +25,8 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import axios from 'axios';
 
-function createData(name, role, contact) {
-  return { name, role, contact };
+function createData(id,name, role, contact) {
+  return {id, name, role, contact };
 }
 
 function AdminTeams() {
@@ -39,7 +39,7 @@ function AdminTeams() {
     const fetchTeams = async () => {
       try {
         const response = await axios.get('/api/teams');
-        setRows(response.data.map(team => createData(team.name, team.role, team.contact)));
+        setRows(response.data.map(team => createData(team._id, team.name, team.role, team.contact)));
       } catch (error) {
         console.error('Error fetching team data:', error);
       }
@@ -58,7 +58,7 @@ function AdminTeams() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/add', newTeam);
+      const response = await axios.post('/api/teams/add', newTeam);
       setRows([...rows, createData(response.data.name, response.data.role, response.data.contact)]);
       handleClose();
     } catch (error) {
@@ -148,7 +148,7 @@ function AdminTeams() {
                   <TableBody>
                     {rows.map((row) => (
                       <TableRow
-                        key={row.name}
+                        key={row.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}

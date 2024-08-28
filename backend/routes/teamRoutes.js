@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Team = require('../models/teamModel');
+const Team = require('../models/teamModel.js');
 
 // Create a new team member
 router.post('/add', async (req, res) => {
