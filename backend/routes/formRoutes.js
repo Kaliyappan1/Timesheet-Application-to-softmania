@@ -4,22 +4,24 @@ const router = express.Router();
 
 // Create a new form entry
 router.post('/submit', async (req, res) => {
-  const { name, date, attendance, workHours, topics, description } = req.body;
+  const { name, date, attendance, workHours, topics, reason, description } = req.body;
 
   try {
+    // Create a new form entry
     const newForm = new Form({
       name,
       date,
       attendance,
-      workHours,
-      topics,
+      workHours: attendance === 'Absent' ? null : workHours,
+      topics: attendance === 'Absent' ? null : topics,
+      reason: (attendance === 'Late' || attendance === 'Absent') ? reason : null,
       description,
     });
 
     await newForm.save();
     res.status(201).json({ success: true, message: 'Form submitted successfully' });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(400).json({ success: false, message: error.message });
   }
 });
 

@@ -25,9 +25,37 @@ function Form() {
   const [date, setDate] = useState(null);
   const [workHours, setWorkHours] = useState("");
   const [description, setDescription] = useState("");
+  const [reason, setReason] = useState("");
+
+  // States to track if fields have been touched
+  const [formErrors, setFormErrors] = useState({
+    name: false,
+    date: false,
+    attendance: false,
+    workHours: false,
+    topics: false,
+    reason: false,
+  });
+
+  const validateForm = () => {
+    const errors = {
+      name: !name,
+      date: !date,
+      attendance: !attendance,
+      workHours: attendance !== 'Absent' && !workHours,
+      topics: attendance !== 'Absent' && !topics,
+      reason: (attendance === 'Late' || attendance === 'Absent') && !reason,
+    };
+    setFormErrors(errors);
+    return !Object.values(errors).includes(true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      alert("Please fill in all required fields.");
+      return;
+    }
 
     const formData = {
       name,
@@ -36,6 +64,7 @@ function Form() {
       workHours,
       topics,
       description,
+      reason,
     };
 
     try {
@@ -56,6 +85,7 @@ function Form() {
         setWorkHours("");
         setTopics("");
         setDescription("");
+        setReason("");
       } else {
         alert("Failed to submit form");
       }
@@ -96,6 +126,9 @@ function Form() {
                   color="success"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
+                  error={formErrors.name}
+                  helperText={formErrors.name ? "Name is required" : ""}
                 />
                 <ThemeProvider theme={theme}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -104,65 +137,77 @@ function Form() {
                       label="Select Date"
                       value={date}
                       onChange={(newValue) => setDate(newValue)}
+                      components={{ TextField: (props) => (
+                        <TextField
+                          {...props}
+                          required
+                          error={formErrors.date}
+                          helperText={formErrors.date ? "Date is required" : ""}
+                        />
+                      )}}
                     />
                   </LocalizationProvider>
                 </ThemeProvider>
 
-                <FormControl color="success" sx={{ minWidth: 265, mb: 2 }}>
-                  <InputLabel id="select-label-attendence">
-                    Attendence
-                  </InputLabel>
+                <FormControl color="success" sx={{ minWidth: 265, mb: 2 }} required>
+                  <InputLabel id="select-label-attendance">Attendance</InputLabel>
                   <Select
                     labelId="select-label-attendance"
                     value={attendance}
                     label="Attendance"
                     onChange={(e) => setAttendance(e.target.value)}
+                    error={formErrors.attendance}
                   >
                     <MenuItem value={"Present"}>Present</MenuItem>
-                    <MenuItem value={"late"}>Half Day</MenuItem>
-                    <MenuItem value={"absent"}>Absent</MenuItem>
+                    <MenuItem value={"Late"}>Late</MenuItem>
+                    <MenuItem value={"Absent"}>Absent</MenuItem>
                   </Select>
+                  {formErrors.attendance && (
+                    <Typography color="error" variant="body2">Attendance is required</Typography>
+                  )}
                 </FormControl>
 
-                <TextField
-                  sx={{ mb: 2, width: 265 }}
-                  label="Work Hours"
-                  color="success"
-                  variant="outlined"
-                  value={workHours}
-                  onChange={(e) => setWorkHours(e.target.value)}
-                />
+                {attendance !== 'Absent' && (
+                  <>
+                    <TextField
+                      sx={{ mb: 2, width: 265 }}
+                      label="Work Hours"
+                      color="success"
+                      variant="outlined"
+                      value={workHours}
+                      onChange={(e) => setWorkHours(e.target.value)}
+                      required
+                      error={formErrors.workHours}
+                      helperText={formErrors.workHours ? "Work Hours are required" : ""}
+                    />
 
-<TextField
-                  sx={{ mb: 2, width: 265 }}
-                  label="Topics"
-                  variant="outlined"
-                  color="success"
-                  value={topics}
-                  onChange={(e) => setTopics(e.target.value)}
-                />
+                    <TextField
+                      sx={{ mb: 2, width: 265 }}
+                      label="Topics"
+                      variant="outlined"
+                      color="success"
+                      value={topics}
+                      onChange={(e) => setTopics(e.target.value)}
+                      required
+                      error={formErrors.topics}
+                      helperText={formErrors.topics ? "Topics are required" : ""}
+                    />
+                  </>
+                )}
 
-
-                {/* <FormControl color="success" sx={{ minWidth: 265, mb: 2 }}>
-                  <InputLabel id="select-label-topics">Topics</InputLabel>
-                  <Select
-                    labelId="select-label-topics"
-                    id="select-label"
-                    value={topics}
-                    label="topics"
-                    onChange={handleChangeTopics}
-                  >
-                    <MenuItem value={"Web development"}>
-                      Web development
-                    </MenuItem>
-                    <MenuItem value={"Python Development"}>
-                      Python Development
-                    </MenuItem>
-                    <MenuItem value={"Timesheet Application"}>
-                      Timesheet Application
-                    </MenuItem>
-                  </Select>
-                </FormControl> */}
+                {(attendance === 'Late' || attendance === 'Absent') && (
+                  <TextField
+                    sx={{ mb: 2, width: 265 }}
+                    label="Reason"
+                    variant="outlined"
+                    color="success"
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    required
+                    error={formErrors.reason}
+                    helperText={formErrors.reason ? "Reason is required" : ""}
+                  />
+                )}
 
                 <Textarea
                   minRows={2}
@@ -193,7 +238,6 @@ function Form() {
                 <Button
                   sx={{ pl: 5, pr: 5, pb: 1, pt: 1, mt: 3, mb: 2 }}
                   variant="contained"
-                  size="contained"
                   color="success"
                   onClick={handleSubmit}
                 >
@@ -251,4 +295,5 @@ function Form() {
     </div>
   );
 }
+
 export default Form;
