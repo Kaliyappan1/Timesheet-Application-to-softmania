@@ -21,6 +21,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import theme from "../../components/Theme";
 import axios from "axios";
+import SnackbarAlert from "../../components/customAlert";
 
 function AdminTimesheets() {
   const [rows, setRows] = useState([]);
@@ -34,6 +35,15 @@ function AdminTimesheets() {
     topics: "",
     description: "",
   });
+
+
+    // snackbar state
+    const [snackbarOpen, setSnackbarOpen] =useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  
+    const handleSnackbarClose = () => setSnackbarOpen(false);
+  
 
   // Fetch data from MongoDB
   useEffect(() => {
@@ -53,6 +63,9 @@ function AdminTimesheets() {
         );
       } catch (err) {
         console.error("Failed to fetch timesheets:", err);
+        setSnackbarMessage('Failed fetching timesheet data')
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
       }
     };
 
@@ -63,28 +76,44 @@ function AdminTimesheets() {
   const handleEdit = (row) => {
     setEditData(row);
     setOpenEdit(true);
+
   };
 
   // Handle save action
   const handleSave = async () => {
     try {
       await axios.put(`/api/forms/timesheets/${editData.id}`, editData);
-      setRows(rows.map(row => (row.id === editData.id ? editData : row)));
+      setRows(rows.map((row) => (row.id === editData.id ? editData : row)));
       setOpenEdit(false);
+      setSnackbarMessage('timesheet updated successfully')
+      setSnackbarSeverity('success');
     } catch (err) {
       console.error("Failed to save timesheet:", err);
+      setSnackbarMessage('Failed to save timesheet data')
+        setSnackbarSeverity('error');
+        
     }
+    setSnackbarOpen(true);
+    handleClose();
   };
 
   // Handle delete action with confirmation
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this timesheet?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this timesheet?"
+    );
     if (confirmDelete) {
       try {
         await axios.delete(`/api/forms/timesheets/${id}`);
         setRows(rows.filter((row) => row.id !== id));
+        setSnackbarMessage('Timesheet as successfully deleted')
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
       } catch (err) {
         console.error("Failed to delete timesheet:", err);
+        setSnackbarMessage('Failed deleting Timesheet data')
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
       }
     }
   };
@@ -95,21 +124,18 @@ function AdminTimesheets() {
 
   const columns = [
     { field: "id", headerName: "ID" },
-    { field: "name", headerName: "Name"},
-    { field: "date", headerName: "Date"},
-    { field: "attendance", headerName: "Attendance"},
-    { field: "workHours", type: "number", headerName: "Work Hours"},
+    { field: "name", headerName: "Name" },
+    { field: "date", headerName: "Date" },
+    { field: "attendance", headerName: "Attendance" },
+    { field: "workHours", type: "number", headerName: "Work Hours" },
     { field: "topics", headerName: "Topics", width: 250 },
     { field: "description", headerName: "Description", width: 400 },
     {
       field: "edit",
       headerName: "Edit",
-     
+
       renderCell: (params) => (
-        <IconButton
-          color="primary"
-          onClick={() => handleEdit(params.row)}
-        >
+        <IconButton color="primary" onClick={() => handleEdit(params.row)}>
           <EditIcon />
         </IconButton>
       ),
@@ -118,10 +144,7 @@ function AdminTimesheets() {
       field: "delete",
       headerName: "Delete",
       renderCell: (params) => (
-        <IconButton
-          color="error"
-          onClick={() => handleDelete(params.row.id)}
-        >
+        <IconButton color="error" onClick={() => handleDelete(params.row.id)}>
           <DeleteIcon />
         </IconButton>
       ),
@@ -197,8 +220,8 @@ function AdminTimesheets() {
         {/* Edit Dialog */}
         <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
           <DialogTitle>Edit Timesheet</DialogTitle>
-          <DialogContent sx={{p:2}}>
-            <Grid  container spacing={2}>
+          <DialogContent sx={{ p: 2 }}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -221,8 +244,7 @@ function AdminTimesheets() {
                   }}
                 />
               </Grid>
-              
-              
+
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -249,6 +271,12 @@ function AdminTimesheets() {
           </DialogActions>
         </Dialog>
       </Box>
+      <SnackbarAlert
+        open={snackbarOpen}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+        severity={snackbarSeverity}
+      />
     </Box>
   );
 }
