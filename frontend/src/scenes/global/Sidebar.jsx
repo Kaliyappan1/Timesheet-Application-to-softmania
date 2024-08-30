@@ -4,6 +4,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { IoMdLogOut, IoMdTime } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { BsFillPeopleFill } from "react-icons/bs";
+import SnackbarAlert from "../../components/customAlert";
 
 const SidebarContext = createContext();
 
@@ -11,6 +12,15 @@ function AdminSidebar({ children }) {
   const [collapsed, setCollapsed] = useState(window.innerWidth <= 0);
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
+
+  // snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  const handleSnackbarClose = () => setSnackbarOpen(false);
+
+
   const [sidebarItems, setSidebarItems] = useState([
     {
       icon: <MdSpaceDashboard size={25} />,
@@ -67,8 +77,13 @@ function AdminSidebar({ children }) {
 
   const handleLogout = () => {
     localStorage.removeItem("admin");
+    setSnackbarMessage("Admin Dashboard is logout successfully.");
+    setSnackbarSeverity("warning");
+    setSnackbarOpen(true);
+    setTimeout(() => {
 
-    navigate("/admin");
+      navigate("/admin");
+    }, 500)
   };
 
   return (
@@ -150,6 +165,13 @@ function AdminSidebar({ children }) {
         </nav>
       </aside>
       {children}
+
+      <SnackbarAlert
+          open={snackbarOpen}
+          message={snackbarMessage}
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+        />
     </>
   );
 }

@@ -36,14 +36,12 @@ function AdminTimesheets() {
     description: "",
   });
 
+  // snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
-    // snackbar state
-    const [snackbarOpen, setSnackbarOpen] =useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-  
-    const handleSnackbarClose = () => setSnackbarOpen(false);
-  
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
   // Fetch data from MongoDB
   useEffect(() => {
@@ -61,10 +59,13 @@ function AdminTimesheets() {
             description: timesheet.description,
           }))
         );
+        setSnackbarMessage("Fetched timesheet data successfully.");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
       } catch (err) {
         console.error("Failed to fetch timesheets:", err);
-        setSnackbarMessage('Failed fetching timesheet data')
-        setSnackbarSeverity('error');
+        setSnackbarMessage("Failed fetching timesheet data");
+        setSnackbarSeverity("error");
         setSnackbarOpen(true);
       }
     };
@@ -76,7 +77,6 @@ function AdminTimesheets() {
   const handleEdit = (row) => {
     setEditData(row);
     setOpenEdit(true);
-
   };
 
   // Handle save action
@@ -84,17 +84,16 @@ function AdminTimesheets() {
     try {
       await axios.put(`/api/forms/timesheets/${editData.id}`, editData);
       setRows(rows.map((row) => (row.id === editData.id ? editData : row)));
+      setSnackbarMessage("Timesheet has been updated successfully.");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
       setOpenEdit(false);
-      setSnackbarMessage('timesheet updated successfully')
-      setSnackbarSeverity('success');
     } catch (err) {
       console.error("Failed to save timesheet:", err);
-      setSnackbarMessage('Failed to save timesheet data')
-        setSnackbarSeverity('error');
-        
+      setSnackbarMessage("Failed to Save timesheet.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
-    setSnackbarOpen(true);
-    handleClose();
   };
 
   // Handle delete action with confirmation
@@ -106,13 +105,13 @@ function AdminTimesheets() {
       try {
         await axios.delete(`/api/forms/timesheets/${id}`);
         setRows(rows.filter((row) => row.id !== id));
-        setSnackbarMessage('Timesheet as successfully deleted')
-        setSnackbarSeverity('success');
+        setSnackbarMessage("Timesheet as successfully deleted");
+        setSnackbarSeverity("success");
         setSnackbarOpen(true);
       } catch (err) {
         console.error("Failed to delete timesheet:", err);
-        setSnackbarMessage('Failed deleting Timesheet data')
-        setSnackbarSeverity('error');
+        setSnackbarMessage("Failed deleting timesheet.");
+        setSnackbarSeverity("error");
         setSnackbarOpen(true);
       }
     }
