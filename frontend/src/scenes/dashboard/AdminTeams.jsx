@@ -26,7 +26,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import axios from 'axios';
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
-
+import SnackbarAlert from "../../components/customAlert";
 
 function createData(id, name, role, contact) {
   return { id, name, role, contact };
@@ -41,13 +41,24 @@ function AdminTeams() {
   const [ editId, setEditId] = useState(null);
   const rowsPerPage = 9;
 
+  // snackbar state
+  const [snackbarOpen, setSnackbarOpen] =useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  const handleSnackbarClose = () => setSnackbarOpen(false);
+
   useEffect(() => {
     const fetchTeams = async () => {
       try {
         const response = await axios.get('/api/teams');
         setRows(response.data.map(team => createData(team._id, team.name, team.role, team.contact)));
+        
       } catch (error) {
         console.error('Error fetching team data:', error);
+        setSnackbarMessage('Failed fetching team data')
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
       }
     };
 
@@ -72,12 +83,17 @@ function AdminTeams() {
     const conformDelete = window.confirm('Are you sure you want to delete')
     if(conformDelete) {
       try {
-        console.log('Deleting team meber', id);
         
         await axios.delete(`/api/teams/${id}`);
         setRows(rows.filter(row => row.id !== id));
+        setSnackbarMessage('Team member as successfully deleted')
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
       } catch (error) {
         console.error("Error deleting team member", error);
+        setSnackbarMessage('Failed deleting team member')
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
         
       }
     }
@@ -89,14 +105,22 @@ function AdminTeams() {
       if(isEditing) {
         const response = await axios.put(`/api/teams/${editId}`, newTeam);
         setRows(rows.map(row => (row.id === editId ?createData(response.data._id, response.data.name,  response.data.role,  response.data.contact): row)));
+        setSnackbarMessage('Team member updated successfully')
+        setSnackbarSeverity('success');
       }else {
         const response = await axios.post('/api/teams/add', newTeam);
         setRows([...rows, createData(response.data._id, response.data.name, response.data.role, response.data.contact)]);
+        setSnackbarMessage('Team member added successfully')
+        setSnackbarSeverity('success');
 
       }
+      setSnackbarOpen(true);
       handleClose();
     } catch (error) {
       console.error('Error adding/updating new team member:', error);
+      setSnackbarMessage('Failed adding/updating team member')
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
   };
 
@@ -290,6 +314,14 @@ function AdminTeams() {
               </form>
             </Box>
           </Modal>
+
+              <SnackbarAlert 
+              open={snackbarOpen}
+              message={snackbarMessage}
+              onClose={handleSnackbarClose}
+              severity={snackbarSeverity}
+              />
+
         </ThemeProvider>
       </Box>
     </Box>
