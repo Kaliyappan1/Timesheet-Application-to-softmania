@@ -24,6 +24,9 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from 'axios';
+import Delete from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
+
 
 function createData(id, name, role, contact) {
   return { id, name, role, contact };
@@ -34,6 +37,8 @@ function AdminTeams() {
   const [open, setOpen] = useState(false);
   const [newTeam, setNewTeam] = useState({ name: '', role: '', contact: '' });
   const [currentPage, setCurrentPage] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
+  const [ editId, setEditId] = useState(null);
   const rowsPerPage = 9;
 
   useEffect(() => {
@@ -55,15 +60,43 @@ function AdminTeams() {
   const handleChange = (e) => {
     setNewTeam({ ...newTeam, [e.target.name]: e.target.value });
   };
+  const handleEdit = (id) => {
+    const teamMember = rows.find(row => row.id ===id);
+    setNewTeam({ name: teamMember.name, role: teamMember.role, contact: teamMember.contact });
+    setEditId(id);
+    setIsEditing(true);
+    handleOpen();
+  }
+
+  const handleDelete = async(id) => {
+    const conformDelete = window.confirm('Are you sure you want to delete')
+    if(conformDelete) {
+      try {
+        console.log('Deleting team meber', id);
+        
+        await axios.delete(`/api/teams/${id}`);
+        setRows(rows.filter(row => row.id !== id));
+      } catch (error) {
+        console.error("Error deleting team member", error);
+        
+      }
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/teams/add', newTeam);
-      setRows([...rows, createData(response.data.name, response.data.role, response.data.contact)]);
+      if(isEditing) {
+        const response = await axios.put(`/api/teams/${editId}`, newTeam);
+        setRows(rows.map(row => (row.id === editId ?createData(response.data._id, response.data.name,  response.data.role,  response.data.contact): row)));
+      }else {
+        const response = await axios.post('/api/teams/add', newTeam);
+        setRows([...rows, createData(response.data._id, response.data.name, response.data.role, response.data.contact)]);
+
+      }
       handleClose();
     } catch (error) {
-      console.error('Error adding new team member:', error);
+      console.error('Error adding/updating new team member:', error);
     }
   };
 
@@ -151,6 +184,7 @@ function AdminTeams() {
                       <TableCell>Name</TableCell>
                       <TableCell>Role</TableCell>
                       <TableCell>Contact</TableCell>
+                      <TableCell>Actions</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -166,6 +200,14 @@ function AdminTeams() {
                         </TableCell>
                         <TableCell>{row.role}</TableCell>
                         <TableCell>{row.contact}</TableCell>
+                        <TableCell>
+                          <IconButton  aria-label="edit" onClick={() => handleEdit(row.id)}>
+                            <Edit sx={{color: "gray"}} />
+                          </IconButton>
+                          <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
+                            <Delete />
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
