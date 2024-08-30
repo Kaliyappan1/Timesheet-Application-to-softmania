@@ -25,17 +25,18 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import axios from 'axios';
 
-function createData(id,name, role, contact) {
-  return {id, name, role, contact };
+function createData(id, name, role, contact) {
+  return { id, name, role, contact };
 }
 
 function AdminTeams() {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
   const [newTeam, setNewTeam] = useState({ name: '', role: '', contact: '' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 9;
 
   useEffect(() => {
-    // Fetch initial team data
     const fetchTeams = async () => {
       try {
         const response = await axios.get('/api/teams');
@@ -65,6 +66,13 @@ function AdminTeams() {
       console.error('Error adding new team member:', error);
     }
   };
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const startIdx = (currentPage - 1) * rowsPerPage;
+  const currentRows = rows.slice(startIdx, startIdx + rowsPerPage);
 
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
@@ -135,8 +143,6 @@ function AdminTeams() {
               </Button>
             </Grid>
 
-            
-
             <Grid item xs={12}>
               <TableContainer component={Paper}>
                 <Table stickyHeader aria-label="sticky table">
@@ -148,7 +154,7 @@ function AdminTeams() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row) => (
+                    {currentRows.map((row) => (
                       <TableRow
                         key={row.id}
                         sx={{
@@ -176,8 +182,9 @@ function AdminTeams() {
                     p: 1,
                   }}
                   color="primary"
-                  count={4}
-                  variant="contained"
+                  count={Math.ceil(rows.length / rowsPerPage)}
+                  page={currentPage}
+                  onChange={handlePageChange}
                 />
               </Stack>
             </Grid>

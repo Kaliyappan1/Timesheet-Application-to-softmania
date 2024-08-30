@@ -138,7 +138,7 @@ function AdminSidebar({ children }) {
 
                   {!collapsed && (
                     <div
-                      className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-green-100 text-black text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
+                      className={`absolute left-full rounded-md px-2 z-10 py-1 ml-6 bg-green-100 text-black text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}
                     >
                       {item.text}
                     </div>
