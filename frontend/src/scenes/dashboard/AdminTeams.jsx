@@ -24,24 +24,41 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from 'axios';
+import Delete from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
+import SnackbarAlert from "../../components/customAlert";
 
-function createData(id,name, role, contact) {
-  return {id, name, role, contact };
+function createData(id, name, role, contact) {
+  return { id, name, role, contact };
 }
 
 function AdminTeams() {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
   const [newTeam, setNewTeam] = useState({ name: '', role: '', contact: '' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
+  const [ editId, setEditId] = useState(null);
+  const rowsPerPage = 9;
+
+  // snackbar state
+  const [snackbarOpen, setSnackbarOpen] =useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
   useEffect(() => {
-    // Fetch initial team data
     const fetchTeams = async () => {
       try {
         const response = await axios.get('/api/teams');
         setRows(response.data.map(team => createData(team._id, team.name, team.role, team.contact)));
+        
       } catch (error) {
         console.error('Error fetching team data:', error);
+        setSnackbarMessage('Failed fetching team data')
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
       }
     };
 
@@ -54,17 +71,65 @@ function AdminTeams() {
   const handleChange = (e) => {
     setNewTeam({ ...newTeam, [e.target.name]: e.target.value });
   };
+  const handleEdit = (id) => {
+    const teamMember = rows.find(row => row.id ===id);
+    setNewTeam({ name: teamMember.name, role: teamMember.role, contact: teamMember.contact });
+    setEditId(id);
+    setIsEditing(true);
+    handleOpen();
+  }
+
+  const handleDelete = async(id) => {
+    const conformDelete = window.confirm('Are you sure you want to delete')
+    if(conformDelete) {
+      try {
+        
+        await axios.delete(`/api/teams/${id}`);
+        setRows(rows.filter(row => row.id !== id));
+        setSnackbarMessage('Team member as successfully deleted')
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+      } catch (error) {
+        console.error("Error deleting team member", error);
+        setSnackbarMessage('Failed deleting team member')
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        
+      }
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/teams/add', newTeam);
-      setRows([...rows, createData(response.data.name, response.data.role, response.data.contact)]);
+      if(isEditing) {
+        const response = await axios.put(`/api/teams/${editId}`, newTeam);
+        setRows(rows.map(row => (row.id === editId ?createData(response.data._id, response.data.name,  response.data.role,  response.data.contact): row)));
+        setSnackbarMessage('Team member updated successfully')
+        setSnackbarSeverity('success');
+      }else {
+        const response = await axios.post('/api/teams/add', newTeam);
+        setRows([...rows, createData(response.data._id, response.data.name, response.data.role, response.data.contact)]);
+        setSnackbarMessage('Team member added successfully')
+        setSnackbarSeverity('success');
+
+      }
+      setSnackbarOpen(true);
       handleClose();
     } catch (error) {
-      console.error('Error adding new team member:', error);
+      console.error('Error adding/updating new team member:', error);
+      setSnackbarMessage('Failed adding/updating team member')
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
   };
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const startIdx = (currentPage - 1) * rowsPerPage;
+  const currentRows = rows.slice(startIdx, startIdx + rowsPerPage);
 
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
@@ -135,8 +200,6 @@ function AdminTeams() {
               </Button>
             </Grid>
 
-            
-
             <Grid item xs={12}>
               <TableContainer component={Paper}>
                 <Table stickyHeader aria-label="sticky table">
@@ -145,10 +208,11 @@ function AdminTeams() {
                       <TableCell>Name</TableCell>
                       <TableCell>Role</TableCell>
                       <TableCell>Contact</TableCell>
+                      <TableCell>Actions</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row) => (
+                    {currentRows.map((row) => (
                       <TableRow
                         key={row.id}
                         sx={{
@@ -160,6 +224,14 @@ function AdminTeams() {
                         </TableCell>
                         <TableCell>{row.role}</TableCell>
                         <TableCell>{row.contact}</TableCell>
+                        <TableCell>
+                          <IconButton  aria-label="edit" onClick={() => handleEdit(row.id)}>
+                            <Edit sx={{color: "gray"}} />
+                          </IconButton>
+                          <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
+                            <Delete />
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -176,8 +248,9 @@ function AdminTeams() {
                     p: 1,
                   }}
                   color="primary"
-                  count={4}
-                  variant="contained"
+                  count={Math.ceil(rows.length / rowsPerPage)}
+                  page={currentPage}
+                  onChange={handlePageChange}
                 />
               </Stack>
             </Grid>
@@ -241,6 +314,14 @@ function AdminTeams() {
               </form>
             </Box>
           </Modal>
+
+              <SnackbarAlert 
+              open={snackbarOpen}
+              message={snackbarMessage}
+              onClose={handleSnackbarClose}
+              severity={snackbarSeverity}
+              />
+
         </ThemeProvider>
       </Box>
     </Box>
