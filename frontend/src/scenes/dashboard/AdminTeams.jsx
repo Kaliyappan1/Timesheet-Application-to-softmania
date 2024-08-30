@@ -23,7 +23,7 @@ import {
   TextField,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import axios from 'axios';
+import axios from "axios";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
 import SnackbarAlert from "../../components/customAlert";
@@ -35,29 +35,35 @@ function createData(id, name, role, contact) {
 function AdminTeams() {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
-  const [newTeam, setNewTeam] = useState({ name: '', role: '', contact: '' });
+  const [newTeam, setNewTeam] = useState({ name: "", role: "", contact: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
-  const [ editId, setEditId] = useState(null);
+  const [editId, setEditId] = useState(null);
   const rowsPerPage = 9;
 
   // snackbar state
-  const [snackbarOpen, setSnackbarOpen] =useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleSnackbarClose = () => setSnackbarOpen(false);
 
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get('/api/teams');
-        setRows(response.data.map(team => createData(team._id, team.name, team.role, team.contact)));
-        
+        const response = await axios.get("/api/teams");
+        setRows(
+          response.data.map((team) =>
+            createData(team._id, team.name, team.role, team.contact)
+          )
+        );
+        setSnackbarMessage("Fetched team data successfully.");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
       } catch (error) {
-        console.error('Error fetching team data:', error);
-        setSnackbarMessage('Failed fetching team data')
-        setSnackbarSeverity('error');
+        console.error("Error fetching team data:", error);
+        setSnackbarMessage("Failed fetching team data");
+        setSnackbarSeverity("error");
         setSnackbarOpen(true);
       }
     };
@@ -72,54 +78,74 @@ function AdminTeams() {
     setNewTeam({ ...newTeam, [e.target.name]: e.target.value });
   };
   const handleEdit = (id) => {
-    const teamMember = rows.find(row => row.id ===id);
-    setNewTeam({ name: teamMember.name, role: teamMember.role, contact: teamMember.contact });
+    const teamMember = rows.find((row) => row.id === id);
+    setNewTeam({
+      name: teamMember.name,
+      role: teamMember.role,
+      contact: teamMember.contact,
+    });
     setEditId(id);
     setIsEditing(true);
     handleOpen();
-  }
+  };
 
-  const handleDelete = async(id) => {
-    const conformDelete = window.confirm('Are you sure you want to delete')
-    if(conformDelete) {
+  const handleDelete = async (id) => {
+    const conformDelete = window.confirm("Are you sure you want to delete");
+    if (conformDelete) {
       try {
-        
         await axios.delete(`/api/teams/${id}`);
-        setRows(rows.filter(row => row.id !== id));
-        setSnackbarMessage('Team member as successfully deleted')
-        setSnackbarSeverity('success');
+        setRows(rows.filter((row) => row.id !== id));
+        setSnackbarMessage("Team member as successfully deleted");
+        setSnackbarSeverity("success");
         setSnackbarOpen(true);
       } catch (error) {
         console.error("Error deleting team member", error);
-        setSnackbarMessage('Failed deleting team member')
-        setSnackbarSeverity('error');
+        setSnackbarMessage("Failed deleting team member");
+        setSnackbarSeverity("error");
         setSnackbarOpen(true);
-        
       }
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if(isEditing) {
+      if (isEditing) {
         const response = await axios.put(`/api/teams/${editId}`, newTeam);
-        setRows(rows.map(row => (row.id === editId ?createData(response.data._id, response.data.name,  response.data.role,  response.data.contact): row)));
-        setSnackbarMessage('Team member updated successfully')
-        setSnackbarSeverity('success');
-      }else {
-        const response = await axios.post('/api/teams/add', newTeam);
-        setRows([...rows, createData(response.data._id, response.data.name, response.data.role, response.data.contact)]);
-        setSnackbarMessage('Team member added successfully')
-        setSnackbarSeverity('success');
-
+        setRows(
+          rows.map((row) =>
+            row.id === editId
+              ? createData(
+                  response.data._id,
+                  response.data.name,
+                  response.data.role,
+                  response.data.contact
+                )
+              : row
+          )
+        );
+        setSnackbarMessage("Team member updated successfully");
+        setSnackbarSeverity("success");
+      } else {
+        const response = await axios.post("/api/teams/add", newTeam);
+        setRows([
+          ...rows,
+          createData(
+            response.data._id,
+            response.data.name,
+            response.data.role,
+            response.data.contact
+          ),
+        ]);
+        setSnackbarMessage("Team member added successfully");
+        setSnackbarSeverity("success");
       }
       setSnackbarOpen(true);
       handleClose();
     } catch (error) {
-      console.error('Error adding/updating new team member:', error);
-      setSnackbarMessage('Failed adding/updating team member')
-      setSnackbarSeverity('error');
+      console.error("Error adding/updating new team member:", error);
+      setSnackbarMessage("Failed adding/updating team member");
+      setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
   };
@@ -225,10 +251,16 @@ function AdminTeams() {
                         <TableCell>{row.role}</TableCell>
                         <TableCell>{row.contact}</TableCell>
                         <TableCell>
-                          <IconButton  aria-label="edit" onClick={() => handleEdit(row.id)}>
-                            <Edit sx={{color: "gray"}} />
+                          <IconButton
+                            aria-label="edit"
+                            onClick={() => handleEdit(row.id)}
+                          >
+                            <Edit sx={{ color: "gray" }} />
                           </IconButton>
-                          <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() => handleDelete(row.id)}
+                          >
                             <Delete />
                           </IconButton>
                         </TableCell>
@@ -264,12 +296,12 @@ function AdminTeams() {
           >
             <Box
               sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
                 width: 400,
-                bgcolor: 'background.paper',
+                bgcolor: "background.paper",
                 borderRadius: 1,
                 boxShadow: 24,
                 p: 4,
@@ -315,13 +347,12 @@ function AdminTeams() {
             </Box>
           </Modal>
 
-              <SnackbarAlert 
-              open={snackbarOpen}
-              message={snackbarMessage}
-              onClose={handleSnackbarClose}
-              severity={snackbarSeverity}
-              />
-
+          <SnackbarAlert
+            open={snackbarOpen}
+            message={snackbarMessage}
+            onClose={handleSnackbarClose}
+            severity={snackbarSeverity}
+          />
         </ThemeProvider>
       </Box>
     </Box>

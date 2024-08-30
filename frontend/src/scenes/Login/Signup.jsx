@@ -15,6 +15,7 @@ import Theme from "../../components/Theme";
 import { auth, googleAuthProvider } from "../../../firebase";
 import { signInWithPopup} from "firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
+import SnackbarAlert from "../../components/customAlert";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -24,13 +25,23 @@ export default function Signup() {
     rePassword: "",
   });
 
+    // snackbar state
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  
+    const handleSnackbarClose = () => setSnackbarOpen(false);
+
   const history = useNavigate();
 
   useEffect(() => {
     
     const storedUser = localStorage.getItem("users");
     if (storedUser) {
-      history("/form");
+      setTimeout(() => {
+        
+        history("/form");
+      }, 500);
     }
 
   }, [history]);
@@ -41,7 +52,9 @@ export default function Signup() {
 
   const handleSignup = async () => {
     if (formData.password !== formData.rePassword) {
-      console.error("Passwords do not match");
+      setSnackbarMessage("Password not match.");
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
       return;
     }
 
@@ -56,29 +69,28 @@ export default function Signup() {
         }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Error response text:", errorText);
-        throw new Error(errorText);
-      }
-
       const text = await response.text();
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        console.error("Failed to parse JSON:", e);
-        throw new Error("Invalid response format");
-      }
 
       if (data.message === "User created successfully") {
         localStorage.setItem("users", JSON.stringify(data.user));
-        history("/form");
+
+        setSnackbarMessage("login successfully.");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
+        setTimeout(() => {
+          
+          history("/form");
+        }, 500);
       } else {
-        console.log(data.message);
+        setSnackbarMessage("Error during signup. please try again.");
+        setSnackbarSeverity("warning");
+        setSnackbarOpen(true);
       }
     } catch (error) {
       console.error("Error during signup:", error.message);
+      setSnackbarMessage("Network error during signup. please after trying again.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -98,12 +110,17 @@ export default function Signup() {
         })
       );
 
-      // Optional: Handle further actions with the user data
-      // e.g., redirecting or updating the MongoDB user data
-
-      history("/form");
+      setSnackbarMessage("Google Authentication successfully.");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      setTimeout(() => {
+        
+        history("/form");
+      }, 500);
     } catch (error) {
-      console.error("Error during Google signup:", error.message);
+      setSnackbarMessage("Error during Google Login. Please try again.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -230,6 +247,12 @@ export default function Signup() {
             </Button>
           </div>
         </Card>
+        <SnackbarAlert
+          open={snackbarOpen}
+          message={snackbarMessage}
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+        />
       </ThemeProvider>
     </div>
   );

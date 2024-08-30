@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import theme from "../../components/Theme";
+import SnackbarAlert from "../../components/customAlert";
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,6 +20,13 @@ function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorE2, setAnchorE2] = useState(null);
   const navigate = useNavigate();
+
+  // snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
   useEffect(() => {
     const user = localStorage.getItem("users");
@@ -46,13 +54,25 @@ function Header() {
   const handleLogout = () => {
     localStorage.removeItem("users");
     setIsLoggedIn(false);
-    navigate("/login");
+    setTimeout(() => {
+      
+      navigate("/login");
+    }, 500);
+    setSnackbarMessage("Logout as been successfully.");
+    setSnackbarSeverity("warning");
+    setSnackbarOpen(true);
     handleClose();
   };
   const handleAdminLogout = () => {
     localStorage.removeItem("admin");
     setAdminLoggedIn(false);
-    navigate("/admin");
+    setTimeout(() => {
+      
+      navigate("/admin");
+    }, 500);
+    setSnackbarMessage("Admin Logout as been successfully.");
+    setSnackbarSeverity("warning");
+    setSnackbarOpen(true);
     handleClose();
   };
 
@@ -155,6 +175,12 @@ function Header() {
               )}
             </Toolbar>
           </AppBar>
+          <SnackbarAlert
+            open={snackbarOpen}
+            message={snackbarMessage}
+            onClose={handleSnackbarClose}
+            severity={snackbarSeverity}
+          />
         </Box>
       </ThemeProvider>
     </div>

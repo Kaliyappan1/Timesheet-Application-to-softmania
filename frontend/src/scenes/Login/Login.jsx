@@ -16,18 +16,26 @@ import { auth, googleAuthProvider } from "../../../firebase";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth"; // Import signInWithEmailAndPassword
 import GoogleIcon from "@mui/icons-material/Google";
 import ForgetPassword from "../../components/ForgetPassword";
+import SnackbarAlert from "../../components/customAlert";
 
 export default function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const history = useNavigate();
 
+  // snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  const handleSnackbarClose = () => setSnackbarOpen(false);
+
   const handleForgotPassword = () => {
     setShowForgotPassword(true);
-  }
+  };
 
   const closeModal = () => {
     setShowForgotPassword(false);
-  }
+  };
 
   const [formData, setFormData] = useState({
     email: "",
@@ -37,7 +45,10 @@ export default function Login() {
   useEffect(() => {
     const storedUser = localStorage.getItem("users");
     if (storedUser) {
-      history("/form");
+      setTimeout(()=> {
+
+        history("/form");
+      }, 500);
     }
   }, [history]);
 
@@ -56,23 +67,29 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Error response text:", errorText);
-        throw new Error(errorText);
-      }
-
       const data = await response.json();
       if (data.message === "Login successful") {
         localStorage.setItem("users", JSON.stringify(data.user));
-        history("/form");
+        setTimeout(() => {
+          
+          history("/form");
+        }, 500);
 
+        setSnackbarMessage("login successfully.");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
         return;
       } else {
-        console.log(data.message);
+        setSnackbarMessage("Error during Login. please try again.");
+        setSnackbarSeverity("warning");
+        setSnackbarOpen(true);
       }
     } catch (error) {
-      console.error("Error during login:", error.message);
+      setSnackbarMessage(
+        "Network error during login. please after trying again."
+      );
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -91,9 +108,17 @@ export default function Login() {
           photoURL: user.photoURL,
         })
       );
-      history("/form");
+      setSnackbarMessage("Google Authentication successfully.");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      setTimeout(() => {
+        
+        history("/form");
+      }, 500);
     } catch (error) {
-      console.error("Error during Google login:", error.message);
+      setSnackbarMessage("Error during Google Login. Please try again.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -139,9 +164,13 @@ export default function Login() {
           </Box>
           <div className="login-custamized-space">
             <Checkbox />
-            <Typography sx={{fontSize: 14}} startIcon={<Checkbox/>} >Remember me</Typography >
+            <Typography sx={{ fontSize: 14 }} startIcon={<Checkbox />}>
+              Remember me
+            </Typography>
 
-            <Button onClick={handleForgotPassword} sx={{fontSize: 12}}>Forget password</Button>
+            <Button onClick={handleForgotPassword} sx={{ fontSize: 12 }}>
+              Forget password
+            </Button>
           </div>
           <Box className="login-button-center">
             <div>
@@ -195,9 +224,13 @@ export default function Login() {
             </Button>
           </Box>
         </Card>
-
         <ForgetPassword open={showForgotPassword} handleClose={closeModal} />
-
+        <SnackbarAlert
+          open={snackbarOpen}
+          message={snackbarMessage}
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+        />
       </ThemeProvider>
     </div>
   );
