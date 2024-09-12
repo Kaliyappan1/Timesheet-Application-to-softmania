@@ -1,5 +1,5 @@
-const express = require('express');
-const Form = require('../models/form.js');
+import express from 'express';
+import Form from '../models/form.js'
 const router = express.Router();
 
 // Create a new form entry
@@ -95,4 +95,4 @@ router.delete('/timesheets/:id', async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

@@ -1,10 +1,9 @@
-const User = require('../models/UserModel.js');
-const Admin = require('../models/adminModel.js')
-
+import User from '../models/UserModel.js';
+import Admin from '../models/adminModel.js';
 // @desc    Register a new user
 // @route   POST /api/signup
 // @access  Public
-exports.registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -26,7 +25,7 @@ exports.registerUser = async (req, res) => {
 // @desc    Authenticate user & get token
 // @route   POST /api/login
 // @access  Public
-exports.authUser = async (req, res) => {
+const authUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -42,7 +41,7 @@ exports.authUser = async (req, res) => {
   }
 };
 
-exports.adminUser = async (req, res) => {
+const adminUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -60,3 +59,4 @@ exports.adminUser = async (req, res) => {
   }
 };
 
+export {registerUser, authUser, adminUser}
