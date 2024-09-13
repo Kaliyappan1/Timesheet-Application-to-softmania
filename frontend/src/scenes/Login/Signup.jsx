@@ -118,6 +118,7 @@ export default function Signup() {
         history("/form");
       }, 500);
     } catch (error) {
+      console.log('Signup Error :', error);
       setSnackbarMessage("Error during Google Login. Please try again.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
