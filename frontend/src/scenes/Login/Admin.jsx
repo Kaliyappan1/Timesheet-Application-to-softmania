@@ -65,7 +65,7 @@ function Admin() {
         setSnackbarOpen(true);
       }
     } catch (error) {
-      console.error("Error during adminLogin:", error.message);
+      console.error("Error during adminLogin:", error);
       setSnackbarMessage("Error during admin Login.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);

@@ -75,6 +75,7 @@ export default function Login() {
           history("/form");
         }, 500);
 
+
         setSnackbarMessage("login successfully.");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
@@ -83,8 +84,11 @@ export default function Login() {
         setSnackbarMessage("Error during Login. please try again.");
         setSnackbarSeverity("warning");
         setSnackbarOpen(true);
+        
       }
     } catch (error) {
+      console.log('Login Error :', error);
+      
       setSnackbarMessage(
         "Network error during login. please after trying again."
       );
@@ -116,6 +120,8 @@ export default function Login() {
         history("/form");
       }, 500);
     } catch (error) {
+      console.log('Login Error :', error);
+      
       setSnackbarMessage("Error during Google Login. Please try again.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);

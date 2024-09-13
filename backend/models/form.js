@@ -1,6 +1,5 @@
-// models/Form.js
+import mongoose from "mongoose";
 
-const mongoose = require('mongoose');
 
 const formSchema = new mongoose.Schema({
   name: {
@@ -49,4 +48,4 @@ formSchema.pre('validate', function (next) {
 
 const Form = mongoose.model('Form', formSchema);
 
-module.exports = Form;
+export default Form;
