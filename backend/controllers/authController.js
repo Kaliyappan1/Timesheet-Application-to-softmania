@@ -1,4 +1,4 @@
-import User from '../models/UserModel.js';
+import User from '../models/userModel.js';
 import Admin from '../models/adminModel.js';
 // @desc    Register a new user
 // @route   POST /api/signup
