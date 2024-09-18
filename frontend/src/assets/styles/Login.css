@@ -21,6 +21,8 @@
 .signup-navigate-link{
     text-decoration: none;
     color: blue;
+    display: flex;
+    justify-content: center;
 
 }
 :link{

@@ -143,6 +143,27 @@ export default function Signup() {
             noValidate
             autoComplete="off"
           >
+            
+
+           <Box textAlign="center">
+           <Button
+           fullWidth
+              variant="outlined"
+              startIcon={<GoogleIcon />}
+              onClick={handleGoogleSignup}
+              sx={{
+                pb: 1,
+                pt: 1,
+                mt: 2,
+                mb: 1,
+              }}
+            >
+              Sign up with Google
+            </Button>
+           </Box>
+            <Divider variant="middle" flexItem>
+              Or
+            </Divider>
             <div>
               <TextField
                 size="small"
@@ -191,10 +212,10 @@ export default function Signup() {
             </div>
           </Box>
 
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          {/* <Box sx={{ display: "flex", alignItems: "center" }}>
             <Checkbox />
             <Typography>Remember me</Typography>
-          </Box>
+          </Box> */}
 
           <div className="login-button-center">
             <div>
@@ -205,22 +226,26 @@ export default function Signup() {
                   alignItems: "center",
                 }}
               >
-                Or{" "}
+               
+                  <Typography>
+                    Already have an account? 
+                    <br />
                 <Link to="/login">
-                  <Typography className="signup-navigate-link">
-                    Already have an account?
-                  </Typography>
+                    <span className="signup-navigate-link">
+                      click here
+                    </span>
                 </Link>
+                  </Typography>
               </Box>
             </div>
             <Button
+            fullWidth
               sx={{
-                pl: 8,
-                pr: 8,
+               
                 pb: 1,
                 pt: 1,
-                mt: 3,
-                mb: 1,
+                mt: 1,
+               
               }}
               variant="contained"
               size="contained"
@@ -229,23 +254,7 @@ export default function Signup() {
               SignUp
             </Button>
 
-            <Divider variant="middle" flexItem>
-              Or
-            </Divider>
-
-            <Button
-              variant="outlined"
-              startIcon={<GoogleIcon />}
-              onClick={handleGoogleSignup}
-              sx={{
-                pb: 1,
-                pt: 1,
-                mt: 2,
-                mb: 1,
-              }}
-            >
-              Sign up with Google
-            </Button>
+          
           </div>
         </Card>
         <SnackbarAlert
