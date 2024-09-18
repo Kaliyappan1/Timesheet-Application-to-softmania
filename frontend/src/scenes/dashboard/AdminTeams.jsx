@@ -172,7 +172,7 @@ function AdminTeams() {
               <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
                 Teams
               </Typography>
-              <Avatar sx={{ backgroundColor: "green" }}>K</Avatar>
+            
             </Grid>
 
             <Grid item xs={6} md={4}>

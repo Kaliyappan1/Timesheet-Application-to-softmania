@@ -164,7 +164,7 @@ function AdminTimesheets() {
             <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
               Timesheets
             </Typography>
-            <Avatar sx={{ backgroundColor: "green" }}>K</Avatar>
+        
           </Grid>
 
           <Grid item xs={4}>

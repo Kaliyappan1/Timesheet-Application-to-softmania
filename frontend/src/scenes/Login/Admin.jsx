@@ -25,7 +25,7 @@ function Admin() {
     if (storedUser) {
       setTimeout(() =>{
 
-        history("/admin-Dashboard");
+        history("/admin-Timesheets");
       }, 500)
       setSnackbarMessage("Navigating Admin Dashboard.");
       setSnackbarSeverity("success");
@@ -52,7 +52,7 @@ function Admin() {
       if (data.message === "Login successful") {
         localStorage.setItem("admin", JSON.stringify(data.user));
         setTimeout(() => {
-          history("/admin-Dashboard");
+          history("/admin-Timesheets");
         }, 500)
         setSnackbarMessage("Admin login successfully.");
         setSnackbarSeverity("success");
