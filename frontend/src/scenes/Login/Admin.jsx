@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../assets/styles/Admin.css";
-import { Box, Card, Checkbox, TextField, ThemeProvider } from "@mui/material";
+import { Box, Button, Card, Checkbox, TextField, ThemeProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import theme from "../../components/Theme";
 import SnackbarAlert from "../../components/customAlert";
@@ -115,15 +115,28 @@ function Admin() {
                 />
               </div>
             </Box>
-            <div className="admin-custamized-space">
+            {/* <div className="admin-custamized-space">
               <Checkbox color="success" />
               <p className="admin-remember">Remember me</p>
-            </div>
-            <div className="admin-button">
+            </div> */}
+            {/* <div className="admin-button">
               <button className="button-33" role="button" onClick={adminHandle}>
                 Go Dashboard
               </button>
-            </div>
+            </div> */}
+
+            <Box>
+              <Button
+              fullWidth
+              variant="contained"
+              color="success"
+              size="large"
+              sx={{mt:2}}
+              onClick={adminHandle}
+              >
+                Go Dashboard
+              </Button>
+            </Box>
           </div>
         </Card>
         <SnackbarAlert
