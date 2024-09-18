@@ -146,6 +146,26 @@ export default function Login() {
             noValidate
             autoComplete="off"
           >
+             <Box textAlign="center">  
+            <Button
+            fullWidth
+              startIcon={<GoogleIcon />}
+              variant="outlined"
+              onClick={googleLogin}
+              sx={{
+                pb: 1,
+                pt: 1,
+                mt: 2,
+                mb: 1,
+                
+              }}
+            >
+              Sign in with Google
+            </Button>
+            </Box>
+            <Divider variant="middle" flexItem>
+              Or
+            </Divider>
             <div>
               <TextField
                 id="email"
@@ -168,7 +188,7 @@ export default function Login() {
               />
             </div>
           </Box>
-          <div className="login-custamized-space">
+          {/* <div className="login-custamized-space">
             <Checkbox />
             <Typography sx={{ fontSize: 14 }} startIcon={<Checkbox />}>
               Remember me
@@ -177,7 +197,7 @@ export default function Login() {
             <Button onClick={handleForgotPassword} sx={{ fontSize: 12 }}>
               Forget password
             </Button>
-          </div>
+          </div> */}
           <Box className="login-button-center">
             <div>
               <Box
@@ -197,6 +217,7 @@ export default function Login() {
               </Box>
             </div>
             <Button
+            fullWidth
               sx={{
                 pl: 8,
                 pr: 8,
@@ -212,22 +233,8 @@ export default function Login() {
               Login
             </Button>
 
-            <Divider variant="middle" flexItem>
-              Or
-            </Divider>
-            <Button
-              startIcon={<GoogleIcon />}
-              variant="outlined"
-              onClick={googleLogin}
-              sx={{
-                pb: 1,
-                pt: 1,
-                mt: 2,
-                mb: 1,
-              }}
-            >
-              Sign in with Google
-            </Button>
+           
+           
           </Box>
         </Card>
         <ForgetPassword open={showForgotPassword} handleClose={closeModal} />

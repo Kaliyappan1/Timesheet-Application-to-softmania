@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://backend-timesheet-bxng.onrender.com",
+        target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
       },
