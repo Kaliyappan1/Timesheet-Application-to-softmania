@@ -13,7 +13,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Theme from "../../components/Theme";
 import { auth, googleAuthProvider } from "../../../firebase";
-import { signInWithPopup} from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
 import SnackbarAlert from "../../components/customAlert";
 
@@ -25,25 +25,22 @@ export default function Signup() {
     rePassword: "",
   });
 
-    // snackbar state
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState("");
-    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  
-    const handleSnackbarClose = () => setSnackbarOpen(false);
+  // snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
   const history = useNavigate();
 
   useEffect(() => {
-    
     const storedUser = localStorage.getItem("users");
     if (storedUser) {
       setTimeout(() => {
-        
         history("/form");
       }, 500);
     }
-
   }, [history]);
 
   const handleChange = (e) => {
@@ -53,8 +50,8 @@ export default function Signup() {
   const handleSignup = async () => {
     if (formData.password !== formData.rePassword) {
       setSnackbarMessage("Password not match.");
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
       return;
     }
 
@@ -78,7 +75,6 @@ export default function Signup() {
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
         setTimeout(() => {
-          
           history("/form");
         }, 500);
       } else {
@@ -88,7 +84,9 @@ export default function Signup() {
       }
     } catch (error) {
       console.error("Error during signup:", error.message);
-      setSnackbarMessage("Network error during signup. please after trying again.");
+      setSnackbarMessage(
+        "Network error during signup. please after trying again."
+      );
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
@@ -114,11 +112,10 @@ export default function Signup() {
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
       setTimeout(() => {
-        
         history("/form");
       }, 500);
     } catch (error) {
-      console.log('Signup Error :', error);
+      console.log("Signup Error :", error);
       setSnackbarMessage("Error during Google Login. Please try again.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
@@ -143,6 +140,25 @@ export default function Signup() {
             noValidate
             autoComplete="off"
           >
+            <Box textAlign="center">
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<GoogleIcon />}
+                onClick={handleGoogleSignup}
+                sx={{
+                  pb: 1,
+                  pt: 1,
+                  mt: 2,
+                  mb: 1,
+                }}
+              >
+                Sign up with Google
+              </Button>
+            </Box>
+            <Divider variant="middle" flexItem>
+              Or
+            </Divider>
             <div>
               <TextField
                 size="small"
@@ -191,13 +207,13 @@ export default function Signup() {
             </div>
           </Box>
 
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          {/* <Box sx={{ display: "flex", alignItems: "center" }}>
             <Checkbox />
             <Typography>Remember me</Typography>
-          </Box>
+          </Box> */}
 
           <div className="login-button-center">
-            <div>
+
               <Box
                 sx={{
                   display: "flex",
@@ -205,46 +221,27 @@ export default function Signup() {
                   alignItems: "center",
                 }}
               >
-                Or{" "}
-                <Link to="/login">
-                  <Typography className="signup-navigate-link">
-                    Already have an account?
-                  </Typography>
-                </Link>
+                <Typography sx={{ mt: 2, mb:2}}>
+                  Already have an account?
+                  <br />
+                  <Link to="/login">
+                    <span className="signup-navigate-link">click here</span>
+                  </Link>
+                </Typography>
               </Box>
-            </div>
+
             <Button
+              fullWidth
               sx={{
-                pl: 8,
-                pr: 8,
                 pb: 1,
                 pt: 1,
-                mt: 3,
-                mb: 1,
+                mt: 1,
               }}
               variant="contained"
               size="contained"
               onClick={handleSignup}
             >
               SignUp
-            </Button>
-
-            <Divider variant="middle" flexItem>
-              Or
-            </Divider>
-
-            <Button
-              variant="outlined"
-              startIcon={<GoogleIcon />}
-              onClick={handleGoogleSignup}
-              sx={{
-                pb: 1,
-                pt: 1,
-                mt: 2,
-                mb: 1,
-              }}
-            >
-              Sign up with Google
             </Button>
           </div>
         </Card>

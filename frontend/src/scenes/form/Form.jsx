@@ -247,7 +247,7 @@ function Form() {
             </CardContent>
           </Card>
         </div>
-        <div className="card-Container-2">
+        {/* <div className="card-Container-2">
           <Card
             sx={{
               maxWidth: 500,
@@ -290,7 +290,7 @@ function Form() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
     </div>
   );
