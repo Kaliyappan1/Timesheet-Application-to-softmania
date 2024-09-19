@@ -23,8 +23,21 @@ import theme from "../../components/Theme";
 import axios from "axios";
 import SnackbarAlert from "../../components/customAlert";
 import { TbReportAnalytics } from "react-icons/tb";
+import ReportPopupDialog from "../../components/ReportPopupDialog";
 
 function AdminTimesheets() {
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   const [rows, setRows] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
   const [editData, setEditData] = useState({
@@ -214,9 +227,12 @@ function AdminTimesheets() {
                   },
                 }}
                 variant="contained"
+                onClick={handleOpen}
               >
-               <TbReportAnalytics size={24} style={{margin: 5}} /> Generate Report
+               <TbReportAnalytics size={24} style={{margin: 5}} /> 
+               Generate Report
               </Button>
+              <ReportPopupDialog open={open} handleClose={handleClose} />
             </Grid>
 
         </Grid>
