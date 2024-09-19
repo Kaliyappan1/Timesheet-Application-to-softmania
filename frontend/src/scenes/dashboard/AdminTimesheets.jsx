@@ -14,8 +14,14 @@ import {
   TextField,
   Typography,
   ThemeProvider,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableContainer,
+  TablePagination,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -26,7 +32,6 @@ import { TbReportAnalytics } from "react-icons/tb";
 import ReportPopupDialog from "../../components/ReportPopupDialog";
 
 function AdminTimesheets() {
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -36,7 +41,6 @@ function AdminTimesheets() {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   const [rows, setRows] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
@@ -50,7 +54,11 @@ function AdminTimesheets() {
     description: "",
   });
 
-  // snackbar state
+  // Pagination states
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Show 10 rows per page by default
+
+  // Snackbar state
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
@@ -99,8 +107,8 @@ function AdminTimesheets() {
       await axios.put(`/api/forms/timesheets/${editData.id}`, editData);
       setRows(rows.map((row) => (row.id === editData.id ? editData : row)));
       setSnackbarMessage("Timesheet has been updated successfully.");
-        setSnackbarSeverity("success");
-        setSnackbarOpen(true);
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
       setOpenEdit(false);
     } catch (err) {
       console.error("Failed to save timesheet:", err);
@@ -119,7 +127,7 @@ function AdminTimesheets() {
       try {
         await axios.delete(`/api/forms/timesheets/${id}`);
         setRows(rows.filter((row) => row.id !== id));
-        setSnackbarMessage("Timesheet as successfully deleted");
+        setSnackbarMessage("Timesheet was successfully deleted");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
       } catch (err) {
@@ -135,134 +143,117 @@ function AdminTimesheets() {
     setEditData({ ...editData, [e.target.name]: e.target.value });
   };
 
-  const columns = [
-    { field: "id", headerName: "ID" },
-    { field: "name", headerName: "Name" },
-    { field: "date", headerName: "Date" },
-    { field: "attendance", headerName: "Attendance" },
-    { field: "workHours", type: "number", headerName: "Work Hours" },
-    { field: "topics", headerName: "Topics", width: 250 },
-    { field: "description", headerName: "Description", width: 400 },
-    {
-      field: "edit",
-      headerName: "Edit",
+  // Pagination handlers
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-      renderCell: (params) => (
-        <IconButton color="primary" onClick={() => handleEdit(params.row)}>
-          <EditIcon />
-        </IconButton>
-      ),
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      renderCell: (params) => (
-        <IconButton color="error" onClick={() => handleDelete(params.row.id)}>
-          <DeleteIcon />
-        </IconButton>
-      ),
-    },
-  ];
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10)); // Update the rows per page
+    setPage(0); // Reset to the first page whenever rowsPerPage changes
+  };
+
+  // Calculate the rows to display based on pagination
+  const paginatedRows = rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Grid container spacing={3}>
-          <Grid
-            item
-            xs={12}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
-              Timesheets
-            </Typography>
-        
+          <Grid item xs={12} display="flex" justifyContent="space-between" alignItems="center">
+            <Typography sx={{ fontSize: 25, fontWeight: 700 }}>Timesheets</Typography>
           </Grid>
 
           <Grid item xs={6} md={4}>
-              <Paper
-                component="form"
-                sx={{
-                  p: "2px 4px",
-                  display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <InputBase
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder="Search..."
-                  inputProps={{ "aria-label": "search teams" }}
-                />
-                <IconButton
-                  type="button"
-                  sx={{ p: "10px" }}
-                  aria-label="search"
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={8}
-              display="flex"
-              justifyContent={{ xs: "flex-start", md: "flex-end" }}
-            >
-              <Button
-                
-                sx={{
-                  color: "white",
+            <Paper component="form" sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: "100%" }}>
+              <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search..." inputProps={{ "aria-label": "search teams" }} />
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={8} display="flex" justifyContent={{ xs: "flex-start", md: "flex-end" }}>
+            <Button
+              sx={{
+                color: "white",
+                backgroundColor: "green",
+                "&:hover": {
+                  backgroundColor: "#004201",
+                  boxShadow: "none",
+                },
+                "&:active": {
+                  boxShadow: "none",
                   backgroundColor: "green",
-                  "&:hover": {
-                    backgroundColor: "#004201",
-                    boxShadow: "none",
-                  },
-                  "&:active": {
-                    boxShadow: "none",
-                    backgroundColor: "green",
-                  },
-                }}
-                variant="contained"
-                onClick={handleOpen}
-              >
-               <TbReportAnalytics size={24} style={{margin: 5}} /> 
-               Generate Report
-              </Button>
-              <ReportPopupDialog open={open} handleClose={handleClose} />
-            </Grid>
-
+                },
+              }}
+              variant="contained"
+              onClick={handleOpen}
+            >
+              <TbReportAnalytics size={24} style={{ margin: 5 }} />
+              Generate Report
+            </Button>
+            <ReportPopupDialog open={open} handleClose={handleClose} />
+          </Grid>
         </Grid>
 
         <ThemeProvider theme={theme}>
           <Grid item xs={12} sx={{ mt: 5 }}>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
-              <div style={{ height: 550, width: "100%" }}>
-                <DataGrid
-                  sx={{
-                    boxShadow: 2,
-                    "& .MuiDataGrid-cell:hover": {
-                      borderColor: "success.light",
-                      border: 1,
-                    },
-                  }}
-                  rows={rows}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 10 },
-                    },
-                  }}
-                  pageSizeOptions={[10, 20, 40]}
-                  checkboxSelection
-                />
-              </div>
+              <TableContainer component={Paper}>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>#</TableCell> {/* Dynamic numbering */}
+                      <TableCell>Name</TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Attendance</TableCell>
+                      <TableCell>Work Hours</TableCell>
+                      <TableCell>Topics</TableCell>
+                      <TableCell>Description</TableCell>
+                      <TableCell>Edit</TableCell>
+                      <TableCell>Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {paginatedRows.map((row, index) => (
+                      <TableRow key={row.id}>
+                        {/* Incremental row number based on page */}
+                        <TableCell>{page * rowsPerPage + index + 1}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.date}</TableCell>
+                        <TableCell>{row.attendance}</TableCell>
+                        <TableCell>{row.workHours}</TableCell>
+                        <TableCell>{row.topics}</TableCell>
+                        <TableCell>{row.description}</TableCell>
+                        <TableCell>
+                          <IconButton color="primary" onClick={() => handleEdit(row)}>
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell>
+                          <IconButton color="error" onClick={() => handleDelete(row.id)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+
+              {/* Pagination Component */}
+              <TablePagination
+                component="div"
+                count={rows.length} // Total rows count
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[5, 10, 15, 20]} // Optional: specify rows per page options
+              />
             </Paper>
           </Grid>
-        </ThemeProvider>
+      
 
         {/* Edit Dialog */}
         <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
@@ -270,45 +261,22 @@ function AdminTimesheets() {
           <DialogContent sx={{ p: 2 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  name="name"
-                  label="Name"
-                  value={editData.name}
-                  onChange={handleChange}
-                />
+                <TextField fullWidth name="name" label="Name" value={editData.name} onChange={handleChange} />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  name="date"
-                  label="Date"
-                  type="date"
-                  value={editData.date}
-                  onChange={handleChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  name="topics"
-                  label="Topics"
-                  value={editData.topics}
-                  onChange={handleChange}
-                />
+                <TextField fullWidth name="date" label="Date" type="date" value={editData.date} onChange={handleChange} />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  name="description"
-                  label="Description"
-                  value={editData.description}
-                  onChange={handleChange}
-                />
+                <TextField fullWidth name="attendance" label="Attendance" value={editData.attendance} onChange={handleChange} />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth name="workHours" label="Work Hours" value={editData.workHours} onChange={handleChange} />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth name="topics" label="Topics" value={editData.topics} onChange={handleChange} />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth name="description" label="Description" value={editData.description} onChange={handleChange} />
               </Grid>
             </Grid>
           </DialogContent>
@@ -317,13 +285,11 @@ function AdminTimesheets() {
             <Button onClick={handleSave}>Save</Button>
           </DialogActions>
         </Dialog>
+    </ThemeProvider>
+
+        {/* Snackbar for notifications */}
+        <SnackbarAlert open={snackbarOpen} onClose={handleSnackbarClose} message={snackbarMessage} severity={snackbarSeverity} />
       </Box>
-      <SnackbarAlert
-        open={snackbarOpen}
-        message={snackbarMessage}
-        onClose={handleSnackbarClose}
-        severity={snackbarSeverity}
-      />
     </Box>
   );
 }
