@@ -22,12 +22,12 @@ function AdminSidebar({ children }) {
 
 
   const [sidebarItems, setSidebarItems] = useState([
-    {
-      icon: <MdSpaceDashboard size={25} />,
-      text: "Dashboard",
-      route: "/admin-Dashboard",
-      alert: false,
-    },
+    // {
+    //   icon: <MdSpaceDashboard size={25} />,
+    //   text: "Dashboard",
+    //   route: "/admin-Dashboard",
+    //   alert: false,
+    // },
     {
       icon: <IoMdTime size={25} />,
       text: "Timesheet",
@@ -60,7 +60,7 @@ function AdminSidebar({ children }) {
   }, []);
 
   const handleItemClick = (index) => {
-    if (index === 3) {
+    if (index === 2) {
       const confirmLogout = window.confirm("Are you sure you want to log out?")
       if (confirmLogout) {
         handleLogout();

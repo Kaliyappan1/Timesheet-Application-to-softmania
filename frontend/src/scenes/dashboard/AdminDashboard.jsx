@@ -74,9 +74,7 @@ function AdminDashboard() {
         <Typography sx={{ fontSize: 25, fontWeight: 700 }}>
           Admin Dashboard
         </Typography>
-        <Stack>
-        <Avatar sx={{backgroundColor: "green"}} >K</Avatar>
-        </Stack>
+  
       </Box>
 
       <ThemeProvider theme={theme}>
