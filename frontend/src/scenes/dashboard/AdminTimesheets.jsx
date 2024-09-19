@@ -22,6 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import theme from "../../components/Theme";
 import axios from "axios";
 import SnackbarAlert from "../../components/customAlert";
+import { TbReportAnalytics } from "react-icons/tb";
 
 function AdminTimesheets() {
   const [rows, setRows] = useState([]);
@@ -167,26 +168,57 @@ function AdminTimesheets() {
         
           </Grid>
 
-          <Grid item xs={4}>
-            <Paper
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-              }}
+          <Grid item xs={6} md={4}>
+              <Paper
+                component="form"
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search..."
+                  inputProps={{ "aria-label": "search teams" }}
+                />
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              display="flex"
+              justifyContent={{ xs: "flex-start", md: "flex-end" }}
             >
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search..."
-                inputProps={{ "aria-label": "search teams" }}
-              />
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-          </Grid>
+              <Button
+                
+                sx={{
+                  color: "white",
+                  backgroundColor: "green",
+                  "&:hover": {
+                    backgroundColor: "#004201",
+                    boxShadow: "none",
+                  },
+                  "&:active": {
+                    boxShadow: "none",
+                    backgroundColor: "green",
+                  },
+                }}
+                variant="contained"
+              >
+               <TbReportAnalytics size={24} style={{margin: 5}} /> Generate Report
+              </Button>
+            </Grid>
+
         </Grid>
 
         <ThemeProvider theme={theme}>

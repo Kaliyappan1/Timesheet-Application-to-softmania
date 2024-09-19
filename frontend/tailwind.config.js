@@ -10,6 +10,6 @@ export default {
       "light-green-50": "#004201",
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animate')],
 }
 
