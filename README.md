@@ -18,14 +18,14 @@ Softmania is a timesheet application designed to track and manage work hours for
 
 ## Technologies Used
 - Frontend: React, Vite
-- Backend: Express.js
+- Backend: Express.js, Node.js
 - Database: MongoDB
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (version X.X.X)
-- MongoDB (version X.X.X)
+- Node.js
+- MongoDB
 
 ### Installation
 
