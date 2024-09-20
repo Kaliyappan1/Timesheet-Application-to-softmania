@@ -67,4 +67,4 @@ Softmania is a timesheet application designed to track and manage work hours for
 4. Download the report as a PDF or Excel file
 
 ## Contact
-For any inquiries or feedback, please contact us at [info@softmania.com](mailto:info@softmania.com).
+For any inquiries or feedback, please contact us at [info@softmania.com](mailto:kaliyappanr.tech@gmail.com).
