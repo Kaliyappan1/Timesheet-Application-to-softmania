@@ -56,7 +56,7 @@ function AdminTimesheets() {
 
   // Pagination states
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10); // Show 10 rows per page by default
+  const [rowsPerPage, setRowsPerPage] = useState(5); // Show 10 rows per page by default
 
   // Snackbar state
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -78,6 +78,7 @@ function AdminTimesheets() {
             attendance: timesheet.attendance,
             workHours: timesheet.workHours,
             topics: timesheet.topics,
+            reason: timesheet.reason,
             description: timesheet.description,
           }))
         );
@@ -209,6 +210,7 @@ function AdminTimesheets() {
                       <TableCell>Attendance</TableCell>
                       <TableCell>Work Hours</TableCell>
                       <TableCell>Topics</TableCell>
+                      <TableCell>Reason</TableCell>
                       <TableCell>Description</TableCell>
                       <TableCell>Edit</TableCell>
                       <TableCell>Delete</TableCell>
@@ -224,6 +226,7 @@ function AdminTimesheets() {
                         <TableCell>{row.attendance}</TableCell>
                         <TableCell>{row.workHours}</TableCell>
                         <TableCell>{row.topics}</TableCell>
+                        <TableCell>{row.reason}</TableCell>
                         <TableCell>{row.description}</TableCell>
                         <TableCell>
                           <IconButton color="primary" onClick={() => handleEdit(row)}>
