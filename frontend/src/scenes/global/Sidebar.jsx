@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoMdLogOut, IoMdTime } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom"; // Import useLocation
 import { BsFillPeopleFill } from "react-icons/bs";
 import SnackbarAlert from "../../components/customAlert";
 
@@ -10,58 +10,68 @@ const SidebarContext = createContext();
 
 function AdminSidebar({ children }) {
   const [collapsed, setCollapsed] = useState(window.innerWidth <= 0);
-  const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current route
+  const currentPath = location.pathname; // Get the current path
 
-  // snackbar state
+  // Snackbar state
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleSnackbarClose = () => setSnackbarOpen(false);
 
-
+  // Sidebar items with route and text information
   const [sidebarItems, setSidebarItems] = useState([
-    // {
-    //   icon: <MdSpaceDashboard size={25} />,
-    //   text: "Dashboard",
-    //   route: "/admin-Dashboard",
-    //   alert: false,
-    // },
     {
-      icon: <IoMdTime size={25} />,
+      icon: (
+        <div className="py-1 px-2 my-2">
+          <IoMdTime size={25} />
+        </div>
+      ),
       text: "Timesheet",
       route: "/admin-Timesheets",
       alert: true,
     },
     {
-      icon: <BsFillPeopleFill size={25} />,
+      icon: (
+        <div className="py-1 px-2 my-2">
+          <BsFillPeopleFill size={25} />
+        </div>
+      ),
       text: "Teams",
       route: "/admin-Teams",
       alert: true,
     },
     {
-      icon: <IoMdLogOut size={25} />,
+      icon: (
+        <div className="py-1 px-2 my-2">
+          <IoMdLogOut size={25} />
+        </div>
+      ),
       text: "Logout",
+      route: "/admin",
       alert: false,
     },
   ]);
 
+  // Determine which item should be active based on the current path
+  const getActiveIndex = () => {
+    const currentIndex = sidebarItems.findIndex(
+      (item) => item.route === currentPath
+    );
+    return currentIndex !== -1 ? currentIndex : 0; // Default to the first item if no match
+  };
+
+  const [activeIndex, setActiveIndex] = useState(getActiveIndex);
+
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 2000) {
-        setCollapsed(false);
-      } else {
-        setCollapsed(true);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    setActiveIndex(getActiveIndex());
+  }, [currentPath]); // Update active index when the path changes
 
   const handleItemClick = (index) => {
     if (index === 2) {
-      const confirmLogout = window.confirm("Are you sure you want to log out?")
+      const confirmLogout = window.confirm("Are you sure you want to log out?");
       if (confirmLogout) {
         handleLogout();
       }
@@ -81,9 +91,8 @@ function AdminSidebar({ children }) {
     setSnackbarSeverity("warning");
     setSnackbarOpen(true);
     setTimeout(() => {
-
       navigate("/admin");
-    }, 500)
+    }, 500);
   };
 
   return (
@@ -124,7 +133,7 @@ function AdminSidebar({ children }) {
                 <li
                   key={index}
                   onClick={() => handleItemClick(index)}
-                  className={`relative flex items-center py-3 px-2 my-1 font-medium rounded-md cursor-pointer transition-colors group ${
+                  className={`relative flex mt-2 mb-2 items-center font-medium rounded-md cursor-pointer transition-colors group ${
                     activeIndex === index
                       ? "bg-gradient-to-tr from-green-400 to-green-600 text-white"
                       : "hover:bg-gradient-to-tr from-green-700/20 to-green-800 text-gray-800"
@@ -167,11 +176,11 @@ function AdminSidebar({ children }) {
       {children}
 
       <SnackbarAlert
-          open={snackbarOpen}
-          message={snackbarMessage}
-          onClose={handleSnackbarClose}
-          severity={snackbarSeverity}
-        />
+        open={snackbarOpen}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+        severity={snackbarSeverity}
+      />
     </>
   );
 }
