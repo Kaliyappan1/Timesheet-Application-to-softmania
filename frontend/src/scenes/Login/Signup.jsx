@@ -49,12 +49,12 @@ export default function Signup() {
 
   const handleSignup = async () => {
     if (formData.password !== formData.rePassword) {
-      setSnackbarMessage("Password not match.");
+      setSnackbarMessage("Passwords do not match.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
       return;
     }
-
+  
     try {
       const response = await fetch("/api/signup", {
         method: "POST",
@@ -65,33 +65,42 @@ export default function Signup() {
           password: formData.password,
         }),
       });
-
-      const text = await response.text();
-
+  
+      if (!response.ok) {  // Check if response is not successful
+        const errorData = await response.json();  // Parse the error response
+        console.log("Error response:", errorData);  // Log the error response for debugging
+        setSnackbarMessage(`Signup error: ${errorData.message || 'Failed to signup'}`);
+        setSnackbarSeverity("warning");
+        setSnackbarOpen(true);
+        return;
+      }
+  
+      const data = await response.json(); // Parse success response
+  
       if (data.message === "User created successfully") {
         localStorage.setItem("users", JSON.stringify(data.user));
-
-        setSnackbarMessage("login successfully.");
+  
+        setSnackbarMessage("Signup successful.");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
         setTimeout(() => {
           history("/form");
         }, 500);
       } else {
-        setSnackbarMessage("Error during signup. please try again.");
+        setSnackbarMessage("Error during signup. Please try again.");
         setSnackbarSeverity("warning");
         setSnackbarOpen(true);
       }
     } catch (error) {
-      console.error("Error during signup:", error.message);
+      console.error("Error during signup:", error);
       setSnackbarMessage(
-        "Network error during signup. please after trying again."
+        "Network error during signup. Please try again."
       );
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
   };
-
+  
   const handleGoogleSignup = async () => {
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
