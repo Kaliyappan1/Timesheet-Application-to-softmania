@@ -68,3 +68,40 @@ Softmania is a timesheet application designed to track and manage work hours for
 
 ## Contact
 For any inquiries or feedback, please contact us at [info@softmania.com](mailto:kaliyappanr.tech@gmail.com).
+
+
+## Release Notes
+### v1.0.0 - First Stable Version
+
+### v1.0.0 Features:
+
+* **Website Access:**
+  * Users can navigate to the website and start tracking their timesheets.
+
+* **User Authentication:**
+  * Google Login for fast and secure access.
+  * Manual Signup option with name, email, and password registration.
+
+* **Timesheet Submission:**
+  * Input fields for Name, Date, Attendance, Work Hours, Topics, and Description.
+  * Confirmation message after successful submission.
+
+* **Admin Panel:**
+  * View, edit, and delete submitted timesheets.
+  * Generate reports in PDF, Excel, or CSV formats by selecting a date range.
+
+* **Team Management:**
+  * Add, edit, and delete team members with Name, Role, and Contact Info.
+  * Verify pagination functionality in the team management section.
+
+* **Logout Functionality:**
+  * Secure logout from the admin panel, redirecting users back to the login page.
+
+* **Responsive Design:**
+  * Fully responsive design ensuring functionality across different devices.
+
+### Deployment:
+
+* **Firebase Hosting:**
+  * The application has been deployed using Firebase, ensuring fast and secure web hosting.
+  * Navigate to [SoftMania Timesheet](https://softmania-timesheet.web.app) for live access to the platform.
