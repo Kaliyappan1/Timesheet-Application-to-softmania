@@ -105,3 +105,8 @@ For any inquiries or feedback, please contact us at [info@softmania.com](mailto:
 * **Firebase Hosting:**
   * The application has been deployed using Firebase, ensuring fast and secure web hosting.
   * Navigate to [SoftMania Timesheet](https://softmania-timesheet.web.app) for live access to the platform.
+
+### v1.0.1:
+
+* **Google auth name fetch:**
+  * Auto-retrieve Google or login name for verification as completed
