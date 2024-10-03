@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/styles/Form.css";
 import {
   Box,
@@ -17,6 +17,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Textarea } from "@mui/joy";
 import theme from "../../components/Theme";
+import { getAuth, onAuthStateChanged } from "firebase/auth"; 
 
 function Form() {
   const [attendance, setAttendance] = useState("");
@@ -36,6 +37,16 @@ function Form() {
     topics: false,
     reason: false,
   });
+
+   // Get the user's name from authentication
+   useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setName(user.displayName || "");
+      }
+    });
+  }, []);
 
   const validateForm = () => {
     const errors = {
@@ -125,23 +136,23 @@ function Form() {
                   variant="outlined"
                   color="success"
                   value={name}
+                  disabled
                   onChange={(e) => setName(e.target.value)}
-                  required
-                  error={formErrors.name}
-                  helperText={formErrors.name ? "Name is required" : ""}
+                  
                 />
                 <ThemeProvider theme={theme}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       sx={{ minWidth: 265, mb: 2 }}
-                      label="Select Date"
+                      label="Select Date *"
                       value={date}
+                      
                       onChange={(newValue) => setDate(newValue)}
                       components={{ TextField: (props) => (
                         <TextField
                           {...props}
                           required
-                          error={formErrors.date}
+                          error={!!formErrors.date}
                           helperText={formErrors.date ? "Date is required" : ""}
                         />
                       )}}
