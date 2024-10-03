@@ -109,4 +109,4 @@ For any inquiries or feedback, please contact us at [info@softmania.com](mailto:
 ### v1.0.1:
 
 * **Google auth name fetch:**
-  * Auto-retrieve Google or login name for verification as completed
+  * Auto-retrieve Google or login name for verification as completed [#21](https://github.com/SoftManiaTech/Timesheet-App/pull/21)
