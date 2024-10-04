@@ -18,8 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { Textarea } from "@mui/joy";
 import theme from "../../components/Theme";
-import { getAuth, onAuthStateChanged } from "firebase/auth"; 
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Form() {
   const [attendance, setAttendance] = useState("");
@@ -30,7 +29,7 @@ function Form() {
   const [description, setDescription] = useState("");
   const [reason, setReason] = useState("");
   const [gName, setGName] = useState(false); // Track Google Auth
-  
+
   const auth = getAuth();
   // States to track if fields have been touched
   const [formErrors, setFormErrors] = useState({
@@ -42,9 +41,8 @@ function Form() {
     reason: false,
   });
 
-   // Get the user's name from authentication
-   useEffect(() => {
-    
+  // Get the user's name from authentication
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setName(user.displayName || "");
@@ -57,9 +55,9 @@ function Form() {
       name: !name,
       date: !date,
       attendance: !attendance,
-      workHours: attendance !== 'Absent' && !workHours,
-      topics: attendance !== 'Absent' && !topics,
-      reason: (attendance === 'Late' || attendance === 'Absent') && !reason,
+      workHours: attendance !== "Absent" && !workHours,
+      topics: attendance !== "Absent" && !topics,
+      reason: (attendance === "Late" || attendance === "Absent") && !reason,
     };
     setFormErrors(errors);
     return !Object.values(errors).includes(true);
@@ -142,8 +140,6 @@ function Form() {
                   value={name}
                   disabled
                   required
-                  
-                  
                 />
                 <ThemeProvider theme={theme}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -151,23 +147,23 @@ function Form() {
                       sx={{ minWidth: 265, mb: 2 }}
                       label="Select Date *"
                       value={date}
-                      maxDate={dayjs()} 
-                      minDate={dayjs().subtract(1, 'month')} 
+                      maxDate={dayjs()}
+                      minDate={dayjs().subtract(1, "month")}
                       onChange={(newValue) => setDate(newValue)}
-                      components={{ TextField: (props) => (
-                        <TextField
-                          {...props}
-                           required
-                          error={formErrors.workHours}
-                      helperText={formErrors.workHours ? "Date is required" : ""}
-                        />
-                      )}}
+                      disabled={!!date}
+                      
                     />
                   </LocalizationProvider>
                 </ThemeProvider>
 
-                <FormControl color="success" sx={{ minWidth: 265, mb: 2 }} required>
-                  <InputLabel id="select-label-attendance">Attendance</InputLabel>
+                <FormControl
+                  color="success"
+                  sx={{ minWidth: 265, mb: 2 }}
+                  required
+                >
+                  <InputLabel id="select-label-attendance">
+                    Attendance
+                  </InputLabel>
                   <Select
                     labelId="select-label-attendance"
                     value={attendance}
@@ -180,11 +176,13 @@ function Form() {
                     <MenuItem value={"Absent"}>Absent</MenuItem>
                   </Select>
                   {formErrors.attendance && (
-                    <Typography color="error" variant="body2">Attendance is required</Typography>
+                    <Typography color="error" variant="body2">
+                      Attendance is required
+                    </Typography>
                   )}
                 </FormControl>
 
-                {attendance !== 'Absent' && (
+                {attendance !== "Absent" && (
                   <>
                     <TextField
                       sx={{ mb: 2, width: 265 }}
@@ -195,7 +193,9 @@ function Form() {
                       onChange={(e) => setWorkHours(e.target.value)}
                       required
                       error={formErrors.workHours}
-                      helperText={formErrors.workHours ? "Work Hours are required" : ""}
+                      helperText={
+                        formErrors.workHours ? "Work Hours are required" : ""
+                      }
                     />
 
                     <TextField
@@ -207,12 +207,14 @@ function Form() {
                       onChange={(e) => setTopics(e.target.value)}
                       required
                       error={formErrors.topics}
-                      helperText={formErrors.topics ? "Topics are required" : ""}
+                      helperText={
+                        formErrors.topics ? "Topics are required" : ""
+                      }
                     />
                   </>
                 )}
 
-                {(attendance === 'Late' || attendance === 'Absent') && (
+                {(attendance === "Late" || attendance === "Absent") && (
                   <TextField
                     sx={{ mb: 2, width: 265 }}
                     label="Reason"
