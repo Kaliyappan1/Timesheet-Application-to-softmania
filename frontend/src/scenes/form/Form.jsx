@@ -74,7 +74,7 @@ function Form() {
 
     const formData = {
       name,
-      date,
+      date: date ? dayjs(date).format("YYYY-MM-DD") : "",
       attendance,
       workHours,
       topics,
@@ -151,8 +151,8 @@ function Form() {
                       sx={{ minWidth: 265, mb: 2 }}
                       label="Select Date *"
                       value={date}
-                      maxDate={dayjs()} // Set max date to current date
-                      minDate={dayjs().subtract(1, 'month')} // Set min date to one month ago
+                      maxDate={dayjs()} 
+                      minDate={dayjs().subtract(1, 'month')} 
                       onChange={(newValue) => setDate(newValue)}
                       components={{ TextField: (props) => (
                         <TextField
