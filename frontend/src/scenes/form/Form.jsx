@@ -27,7 +27,9 @@ function Form() {
   const [workHours, setWorkHours] = useState("");
   const [description, setDescription] = useState("");
   const [reason, setReason] = useState("");
-
+  const [gName, setGName] = useState(false); // Track Google Auth
+  
+  const auth = getAuth();
   // States to track if fields have been touched
   const [formErrors, setFormErrors] = useState({
     name: false,
@@ -40,13 +42,13 @@ function Form() {
 
    // Get the user's name from authentication
    useEffect(() => {
-    const auth = getAuth();
+    
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setName(user.displayName || "");
       }
     });
-  }, []);
+  }, [auth]);
 
   const validateForm = () => {
     const errors = {
@@ -90,7 +92,7 @@ function Form() {
       if (res.ok) {
         alert("Form submitted successfully");
         // Clear the form
-        setName("");
+        setName();
         setDate(null);
         setAttendance("");
         setWorkHours("");
@@ -137,7 +139,7 @@ function Form() {
                   color="success"
                   value={name}
                   disabled
-                  onChange={(e) => setName(e.target.value)}
+                  
                   
                 />
                 <ThemeProvider theme={theme}>
