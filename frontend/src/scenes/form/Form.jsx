@@ -15,9 +15,11 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 import { Textarea } from "@mui/joy";
 import theme from "../../components/Theme";
 import { getAuth, onAuthStateChanged } from "firebase/auth"; 
+
 
 function Form() {
   const [attendance, setAttendance] = useState("");
@@ -139,6 +141,7 @@ function Form() {
                   color="success"
                   value={name}
                   disabled
+                  required
                   
                   
                 />
@@ -148,14 +151,15 @@ function Form() {
                       sx={{ minWidth: 265, mb: 2 }}
                       label="Select Date *"
                       value={date}
-                      
+                      maxDate={dayjs()} // Set max date to current date
+                      minDate={dayjs().subtract(1, 'month')} // Set min date to one month ago
                       onChange={(newValue) => setDate(newValue)}
                       components={{ TextField: (props) => (
                         <TextField
                           {...props}
-                          required
-                          error={!!formErrors.date}
-                          helperText={formErrors.date ? "Date is required" : ""}
+                           required
+                          error={formErrors.workHours}
+                      helperText={formErrors.workHours ? "Date is required" : ""}
                         />
                       )}}
                     />
